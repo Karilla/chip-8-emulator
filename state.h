@@ -11,12 +11,13 @@ typedef struct State{
     uint8_t memory[4096];
     uint16_t PC;
     uint16_t index;
+    uint16_t stack[16];
     uint8_t delay_timer;
     uint8_t sound_timer;
     uint8_t V[16];
 }State;
 
-uint8_t std_font[80] = {0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
+static uint8_t std_font[80] = {0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
                         0x20, 0x60, 0x20, 0x20, 0x70, // 1
                         0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
                         0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3

@@ -6,12 +6,13 @@
 #include <stdio.h>
 
 void init_state(State* state){
-    state->PC = 0;
+    state->PC = 0x200;
     state->index = 0;
     state->delay_timer = 0;
     state->sound_timer = 0;
     memset(state->memory,0,4096);
     memset(state->V,0,16);
+    memset(state->stack,0,16);
     load_font(state,std_font);
 }
 
@@ -20,9 +21,10 @@ void print_state(State* state){
     printf("Index \t=\t%d\n",state->index);
     printf("Delay Timer \t=\t%d\n",state->delay_timer);
     printf("Sound Timer \t=\t%d\n",state->sound_timer);
-    for(int i = 0; i < 16;++i){
-        printf("V%3d \t=\t%d\n",i,state->V[i]);
+    for(int i = 0; i < 15;++i){
+        printf("V%3d\t=\t%d\n",i,state->V[i]);
     }
+    printf("VF\t=\t%d\n",state->V[15]);
 }
 
 void load_font(State* state,const uint8_t* font){
