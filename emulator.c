@@ -31,3 +31,29 @@ uint16_t fetch_instr(State* state){
     state->PC +=2;
     return temp;
 }
+
+void decode_instr(State* state, uint16_t instruction){
+    switch(instruction >> 12){
+        case 0x0:
+            printf("Effacage de l'ecran\n");
+            break;
+        case 0x1:
+            printf("Jump\n");
+            break;
+        case 0x6:
+            printf("set register\n");
+            break;
+        case 0x7:
+            printf("Add value\n");
+            break;
+        case 0xA:
+            printf("Set index register\n");
+            break;
+        case 0xD:
+            printf("Display/Draw\n");
+            break;
+        default:
+            printf("Instruction not implemented yet\n");
+            break;
+    }
+}

@@ -9,4 +9,7 @@
 void load_program(State* state, const char* filename);
 
 uint16_t fetch_instr(State* state);
+
+void decode_instr(State* state, uint16_t instruction);
+
 #endif //REVISON_PRG2_EMULATOR_H
