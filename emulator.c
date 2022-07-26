@@ -3,6 +3,7 @@
 //
 
 #include "emulator.h"
+#include "instruction.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -38,8 +39,10 @@ void decode_instr(State* state, uint16_t instruction){
             printf("Effacage de l'ecran\n");
             break;
         case 0x1:
+            jump(state,(instruction & ~0xF000));
             printf("Jump\n");
             break;
+
         case 0x6:
             printf("set register\n");
             break;
@@ -53,7 +56,7 @@ void decode_instr(State* state, uint16_t instruction){
             printf("Display/Draw\n");
             break;
         default:
-            printf("Instruction not implemented yet\n");
+            printf("Instruction not implemented yet : %04x\n",instruction);
             break;
     }
 }

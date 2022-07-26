@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     init_state(&state);
     load_program(&state,"../IBM Logo.ch8");
     //print_state(&state);
-    for(int x = 0; x < 20;++x){
+    for(int x = 0; x < 50;++x){
         decode_instr(&state, fetch_instr(&state));
     }
     dump_memory(&state,"../dump.txt");
