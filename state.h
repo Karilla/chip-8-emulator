@@ -12,6 +12,7 @@ typedef struct State{
     uint16_t PC;
     uint16_t index;
     uint16_t stack[16];
+    uint8_t stack_pointer;
     uint8_t delay_timer;
     uint8_t sound_timer;
     uint8_t V[16];
