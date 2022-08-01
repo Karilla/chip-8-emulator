@@ -9,4 +9,10 @@
 
 void jump(State* state, uint16_t address);
 
+void simple_add(State* state,uint8_t reg, uint8_t value);
+
+void set_register(State* state,uint8_t reg, uint8_t value);
+
+void set_index_register(State* state, uint16_t value);
+
 #endif //REVISON_PRG2_INSTRUCTION_H

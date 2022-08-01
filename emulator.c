@@ -7,6 +7,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MASK_12BITS 0x0FFF
+#define MASK_8BITS 0x00FF
+#define MASK_4BITS 0x000F
+
 void load_program(State* state, const char* filename){
     FILE* program_file = fopen(filename, "rb");
     if(!program_file){
@@ -42,14 +46,16 @@ void decode_instr(State* state, uint16_t instruction){
             jump(state,(instruction & ~0xF000));
             printf("Jump\n");
             break;
-
         case 0x6:
-            printf("set register\n");
+            set_register(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
+            printf("Set %d at register %d\n",instruction & MASK_8BITS, (instruction >> 8) & MASK_4BITS);
             break;
         case 0x7:
+            simple_add(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
             printf("Add value\n");
             break;
         case 0xA:
+            set_index_register(state, instruction & MASK_12BITS);
             printf("Set index register\n");
             break;
         case 0xD:
