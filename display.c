@@ -22,3 +22,12 @@ void create_grid(SDL_Renderer** renderer){
     }
     SDL_RenderPresent(*renderer);
 }
+
+void update_grid(SDL_Renderer** renderer, State* state){
+    for(int x = 0; x < 64;++x){
+        for(int y = 0; y < 32; ++y){
+            create_rectangle(renderer,PIXEL_SIZE * x, 10 + PIXEL_SIZE * y, PIXEL_SIZE, PIXEL_SIZE, state->screen[x][y]);
+        }
+    }
+    SDL_RenderPresent(*renderer);
+}

@@ -12,4 +12,6 @@ void create_rectangle(SDL_Renderer** renderer, int x, int y , int w, int h, bool
 
 void create_grid(SDL_Renderer** renderer);
 
+void update_grid(SDL_Renderer** renderer, State* state);
+
 #endif //REVISON_PRG2_DISPLAY_H

@@ -56,7 +56,8 @@ void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* 
     SDL_SetWindowTitle(*window, "CHIP8-Emulator");
     *winHandle = getSDLWindowHandle(*window);
     ActivateMenu(*winHandle);
-
+    //Enable WinAPI Events Processing
+    SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 }
 
 void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer){
@@ -67,6 +68,15 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer)
             switch (event.type) {
                 case SDL_QUIT:
                     isRunning = false;
+                    break;
+                case SDL_SYSWMEVENT:
+                    printf("TEEEST\n");
+                    if(event.syswm.msg->msg.win.msg == WM_COMMAND){
+
+                        if(LOWORD(event.syswm.msg->msg.win.wParam) == 1){
+                            isRunning = false;
+                        }
+                    }
                     break;
                 default:
                     break;

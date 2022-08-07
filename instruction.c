@@ -20,3 +20,7 @@ void set_register(State* state,uint8_t reg, uint8_t value){
 void set_index_register(State* state, uint16_t value){
     state->index = value;
 }
+
+void display(State* state, uint8_t n){
+
+}
