@@ -14,6 +14,8 @@ void init_state(State* state){
     memset(state->memory,0,4096);
     memset(state->V,0,16);
     memset(state->stack,0,16);
+    printf("Test");
+    memset(state->screen,0,32*64);
     load_font(state,std_font);
 }
 

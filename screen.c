@@ -7,6 +7,7 @@
 #include "SDL2/SDL.h"
 #include "stdbool.h"
 #include "windows.h"
+#include "display.h"
 
 HWND getSDLWindowHandle(SDL_Window* win){
     SDL_SysWMinfo infoWindow;
@@ -39,18 +40,21 @@ void ActivateMenu(HWND windowRef)
     SetMenu(windowRef, hMenuBar);
 }
 
-void init_app(State* state, SDL_Window* window, SDL_Renderer* renderer, HWND* winHandle){
+void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* winHandle){
 
     SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
+    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
         exit(EXIT_FAILURE);
     }
     init_state(state);
-    SDL_CreateWindowAndRenderer(640, 300, SDL_WINDOW_RESIZABLE, &window, &renderer);
-
-    SDL_SetWindowTitle(window, "CHIP8-Emulator");
-
-    *winHandle = getSDLWindowHandle(window);
+    printf("Test");
+    *window = SDL_CreateWindow("Test",20,20,640,330,SDL_WINDOW_SHOWN);
+    *renderer = SDL_CreateRenderer(*window,-1,SDL_RENDERER_ACCELERATED);
+    create_grid(renderer);
+    //create_rectangle(renderer,30,50,50,50, 1);
+    SDL_SetWindowTitle(*window, "CHIP8-Emulator");
+    *winHandle = getSDLWindowHandle(*window);
     ActivateMenu(*winHandle);
 
 }

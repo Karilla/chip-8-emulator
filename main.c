@@ -6,16 +6,18 @@
 #include "state.h"
 #include "emulator.h"
 #include "debug.h"
+#include "display.h"
 #include "screen.h"
 
 int main(int argc, char *argv[]){
 
+    printf("Test\n");
     State state;
     HWND windowHandle;
     SDL_Window* window;
     SDL_Renderer* renderer;
 
-    init_app(&state, window, renderer,&windowHandle);
+    init_app(&state, &window, &renderer,&windowHandle);
 
     launch_poll_event(&state,window,renderer);
 }
