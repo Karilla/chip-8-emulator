@@ -6,7 +6,10 @@
 #include "screen.h"
 #include "SDL2/SDL.h"
 #include "stdbool.h"
+#include "constant .h"
+#include <commdlg.h>
 #include "windows.h"
+#include <tchar.h>
 #include "display.h"
 
 HWND getSDLWindowHandle(SDL_Window* win){
@@ -24,18 +27,25 @@ void ActivateMenu(HWND windowRef)
     HMENU hMenuBar = CreateMenu();
     HMENU hFile = CreateMenu();
     HMENU hEdit = CreateMenu();
+    HMENU hDebug = CreateMenu();
     HMENU hHelp = CreateMenu();
 
     AppendMenu(hMenuBar, MF_POPUP, (UINT_PTR)hFile, "File");
     AppendMenu(hMenuBar, MF_POPUP, (UINT_PTR)hEdit, "Edit");
+    AppendMenu(hMenuBar, MF_POPUP,(UINT_PTR)hDebug, "Debug");
     AppendMenu(hMenuBar, MF_POPUP, (UINT_PTR)hHelp, "Help");
 
-    AppendMenu(hFile, MF_STRING, 0, "Load ROM");
-    AppendMenu(hFile, MF_STRING, 1, "Exit");
+    AppendMenu(hFile, MF_STRING, ID_LOAD, "Load ROM");
+    AppendMenu(hFile, MF_STRING, ID_EXIT, "Exit");
 
-    AppendMenu(hEdit, MF_STRING, 2, "Configure Controls");
+    AppendMenu(hEdit, MF_STRING, ID_CONTROL, "Configure Controls");
 
-    AppendMenu(hHelp, MF_STRING, 3, "About");
+    AppendMenu(hDebug,MF_STRING, ID_DUMP, "Dump Memory");
+    AppendMenu(hDebug,MF_STRING, ID_STEP, "Step by Step");
+    AppendMenu(hDebug,MF_STRING, ID_MEM, "Memory Viewer");
+    AppendMenu(hDebug,MF_STRING, ID_STATE, "State Viewer");
+
+    AppendMenu(hHelp, MF_STRING, ID_ABOUT, "About");
 
     SetMenu(windowRef, hMenuBar);
 }
@@ -48,7 +58,6 @@ void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* 
         exit(EXIT_FAILURE);
     }
     init_state(state);
-    printf("Test");
     *window = SDL_CreateWindow("Test",20,20,640,330,SDL_WINDOW_SHOWN);
     *renderer = SDL_CreateRenderer(*window,-1,SDL_RENDERER_ACCELERATED);
     create_grid(renderer);
@@ -60,7 +69,7 @@ void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* 
     SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 }
 
-void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer){
+void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer, HWND winHandle){
     bool isRunning = true;
     while (isRunning){
         SDL_Event event;
@@ -70,11 +79,12 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer)
                     isRunning = false;
                     break;
                 case SDL_SYSWMEVENT:
-                    printf("TEEEST\n");
                     if(event.syswm.msg->msg.win.msg == WM_COMMAND){
-
-                        if(LOWORD(event.syswm.msg->msg.win.wParam) == 1){
+                        if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_EXIT){
                             isRunning = false;
+                        }
+                        else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_LOAD){
+                            get_rom_file(winHandle);
                         }
                     }
                     break;
@@ -83,4 +93,23 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer)
             }
         }
     }
+}
+
+char* get_rom_file(HWND win_handle){
+    char filename [MAX_PATH];
+
+    OPENFILENAME ofn;
+    memset(filename,0,MAX_PATH);
+    ZeroMemory( &ofn, sizeof(ofn));
+
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = win_handle;
+    ofn.lpstrFilter = "Chip-8 Rom\0*.ch8\0Any File\0*.*\0";
+    ofn.lpstrFile    = filename;
+    ofn.nMaxFile     = MAX_PATH;
+    ofn.lpstrTitle   = "Select a File, yo!";
+    ofn.
+    ofn.Flags        = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
+    GetOpenFileName(&ofn);
+    return ofn.lpstrFile;
 }

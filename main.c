@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
 
     init_app(&state, &window, &renderer,&windowHandle);
 
-    launch_poll_event(&state,window,renderer);
+    launch_poll_event(&state,window,renderer, windowHandle);
 }
 
 /*

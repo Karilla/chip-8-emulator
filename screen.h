@@ -9,10 +9,12 @@
 
 void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer,HWND* winHandle);
 
-void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer);
+void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer, HWND winHandle);
 
 void ActivateMenu(HWND windowRef);
 
 HWND getSDLWindowHandle(SDL_Window* win);
+
+char* get_rom_file(HWND win_handle);
 
 #endif //REVISON_PRG2_SCREEN_H

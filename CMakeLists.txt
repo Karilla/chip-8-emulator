@@ -9,7 +9,7 @@ find_package(SDL2 REQUIRED)
 
 
 include_directories(${SDL2_INCLUDE_DIR})
-add_executable(Revison_prg2 main.c state.c state.h emulator.c emulator.h debug.c debug.h instruction.c instruction.h screen.c screen.h display.c display.h)
+add_executable(Revison_prg2 main.c state.c state.h emulator.c emulator.h debug.c debug.h instruction.c instruction.h screen.c screen.h display.c display.h "constant .h")
 SET(CMAKE_C_FLAGS_DEBUG "-O0")
 
 target_link_libraries(Revison_prg2 ${SDL2_LIBRARY} )

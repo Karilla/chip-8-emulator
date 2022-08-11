@@ -10,7 +10,7 @@ const int PIXEL_SIZE = 10;
 void create_rectangle(SDL_Renderer** renderer, int x, int y , int w, int h, bool on_off){
     SDL_Rect rect = {x,y,w,h};
     int color = (int)on_off * 255;
-    SDL_SetRenderDrawColor(*renderer,color,color,color,255);
+    SDL_SetRenderDrawColor(*renderer,0,color,0,255);
     SDL_RenderFillRect(*renderer,&rect);
 }
 
