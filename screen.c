@@ -10,7 +10,9 @@
 #include <commdlg.h>
 #include "windows.h"
 #include <tchar.h>
+#include "debug.h"
 #include "display.h"
+#include "emulator.h"
 
 HWND getSDLWindowHandle(SDL_Window* win){
     SDL_SysWMinfo infoWindow;
@@ -84,7 +86,8 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer,
                             isRunning = false;
                         }
                         else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_LOAD){
-                            get_rom_file(winHandle);
+                            load_program(state,get_rom_file(winHandle));
+                            dump_memory(state,"test");
                         }
                     }
                     break;
@@ -108,7 +111,7 @@ char* get_rom_file(HWND win_handle){
     ofn.lpstrFile    = filename;
     ofn.nMaxFile     = MAX_PATH;
     ofn.lpstrTitle   = "Select a File, yo!";
-    ofn.
+    ofn.lpstrInitialDir = "C:\\Users\\benoit\\Documents\\Dev-Project\\cpp\\Revison-prg2";
     ofn.Flags        = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
     GetOpenFileName(&ofn);
     return ofn.lpstrFile;
