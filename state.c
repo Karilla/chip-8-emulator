@@ -35,3 +35,4 @@ void load_font(State* state,const uint8_t* font){
         state->memory[0x050 + i] = font[i];
     }
 }
+

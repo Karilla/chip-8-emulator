@@ -1,0 +1,5 @@
+TODO:
+- Gerer le systeme de timer qui ferait office de sysclk
+- Implementer le menu de debug (instruction step by step, dump memory, state viewer)
+- Gerer le raffraichisemment de l'ecran
+- Ouvrir boite de dialogue pour charger la ro,

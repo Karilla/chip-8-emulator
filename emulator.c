@@ -30,6 +30,7 @@ void load_program(State* state, const char* filename){
     printf("Program loaded successfully\n");
 }
 
+
 uint16_t fetch_instr(State* state){
     uint16_t temp = (state->memory[state->PC]) << 8;
     temp |= state->memory[state->PC + 1];
@@ -65,4 +66,26 @@ void decode_instr(State* state, uint16_t instruction){
             printf("Instruction not implemented yet : %04x\n",instruction);
             break;
     }
+}
+
+void clock_tick(TimerParams params){
+    State* state = params.state;
+    SDL_Renderer** renderer = params.renderer;
+
+    Uint16 instr = fetch_instr(state);
+    decode_instr(state,instr);
+}
+
+uint32_t timer_callback(uint32_t inerval, void* params){
+    SDL_Event  event;
+    SDL_UserEvent  user_event;
+
+    user_event.type = SDL_USEREVENT;
+    user_event.code = 0;
+    user_event.data1 = &clock_tick;
+    user_event.data2 = params;
+    event.type = SDL_USEREVENT;
+    event.user = user_event;
+    SDL_PushEvent(&event);
+    return(inerval);
 }

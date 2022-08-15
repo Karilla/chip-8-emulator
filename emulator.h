@@ -5,6 +5,12 @@
 #ifndef REVISON_PRG2_EMULATOR_H
 #define REVISON_PRG2_EMULATOR_H
 #include "state.h"
+#include "SDL2/SDL.h"
+
+typedef struct TimerParams{
+    State* state;
+    SDL_Renderer ** renderer;
+}TimerParams;
 
 void load_program(State* state, const char* filename);
 
