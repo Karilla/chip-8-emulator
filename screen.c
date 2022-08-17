@@ -71,7 +71,8 @@ void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* 
     SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 }
 
-void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer, HWND winHandle){
+void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer, HWND winHandle){
+    SDL_TimerID timerId;
     bool isRunning = true;
     while (isRunning){
         SDL_Event event;
@@ -86,8 +87,14 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer,
                             isRunning = false;
                         }
                         else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_LOAD){
-                            load_program(state,get_rom_file(winHandle));
+                            char* rom_path = get_rom_file(winHandle);
+                            load_program(state,rom_path);
                             dump_memory(state,"test");
+                            free(rom_path);
+                            TimerParams* params = NULL;
+                            params->state = state;
+                            params->renderer = renderer;
+                            timerId = SDL_AddTimer(30,timer_callback,(TimerParams*) params);
                         }
                     }
                     break;
@@ -109,10 +116,15 @@ char* get_rom_file(HWND win_handle){
     ofn.hwndOwner = win_handle;
     ofn.lpstrFilter = "Chip-8 Rom\0*.ch8\0Any File\0*.*\0";
     ofn.lpstrFile    = filename;
+    ofn.lpstrFile[0] = '\0';
     ofn.nMaxFile     = MAX_PATH;
     ofn.lpstrTitle   = "Select a File, yo!";
     ofn.lpstrInitialDir = "C:\\Users\\benoit\\Documents\\Dev-Project\\cpp\\Revison-prg2";
     ofn.Flags        = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
     GetOpenFileName(&ofn);
-    return ofn.lpstrFile;
+    MessageBox(NULL, ofn.lpstrFile, "File name", MB_OK);
+    char* file_path = calloc(MAX_PATH,sizeof(char));
+    strncpy(file_path,ofn.lpstrFile, strlen(ofn.lpstrFile));
+    printf("%s\n",ofn.lpstrFile);
+    return file_path;
 }

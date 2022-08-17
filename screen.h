@@ -9,7 +9,7 @@
 
 void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer,HWND* winHandle);
 
-void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer* renderer, HWND winHandle);
+void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer, HWND winHandle);
 
 void ActivateMenu(HWND windowRef);
 

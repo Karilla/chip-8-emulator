@@ -11,7 +11,6 @@
 
 int main(int argc, char *argv[]){
 
-    printf("Test\n");
     State state;
     HWND windowHandle;
     SDL_Window* window;
@@ -19,7 +18,7 @@ int main(int argc, char *argv[]){
 
     init_app(&state, &window, &renderer,&windowHandle);
 
-    launch_poll_event(&state,window,renderer, windowHandle);
+    launch_poll_event(&state,window,&renderer, windowHandle);
 }
 
 /*
