@@ -76,16 +76,24 @@ void clock_tick(TimerParams params){
     decode_instr(state,instr);
 }
 
-uint32_t timer_callback(uint32_t inerval, void* params){
-    SDL_Event  event;
-    SDL_UserEvent  user_event;
+Uint32 timer_callback(Uint32 interval, void* params){
+    SDL_Log("Test\n");
+    SDL_Event event;
+    SDL_UserEvent userevent;
 
-    user_event.type = SDL_USEREVENT;
-    user_event.code = 0;
-    user_event.data1 = &clock_tick;
-    user_event.data2 = params;
+    /* In this example, our callback pushes an SDL_USEREVENT event
+    into the queue, and causes our callback to be called again at the
+    same interval: */
+
+    userevent.type = SDL_USEREVENT;
+    userevent.code = 0;
+    userevent.data1 = NULL;
+    userevent.data2 = NULL;
+
     event.type = SDL_USEREVENT;
-    event.user = user_event;
+    event.user = userevent;
+
     SDL_PushEvent(&event);
-    return(inerval);
+    SDL_Log("Test2\n");
+    return(interval);
 }

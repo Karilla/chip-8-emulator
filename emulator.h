@@ -20,6 +20,6 @@ void decode_instr(State* state, uint16_t instruction);
 
 void clock_tick(TimerParams params);
 
-uint32_t timer_callback(uint32_t inerval, void* params);
+Uint32 timer_callback(Uint32 interval, void* params);
 
 #endif //REVISON_PRG2_EMULATOR_H

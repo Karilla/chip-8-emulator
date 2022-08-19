@@ -54,9 +54,9 @@ void ActivateMenu(HWND windowRef)
 
 void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* winHandle){
 
-    SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
-    if(SDL_Init(SDL_INIT_VIDEO) < 0){
+    //SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
+    //SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
+    if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
         exit(EXIT_FAILURE);
     }
     init_state(state);
@@ -72,14 +72,17 @@ void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* 
 }
 
 void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer, HWND winHandle){
-    SDL_TimerID timerId;
     bool isRunning = true;
+    SDL_TimerID x = SDL_AddTimer(1000,timer_callback,NULL);
     while (isRunning){
         SDL_Event event;
-        while (SDL_PollEvent(&event)){
+        while (SDL_WaitEvent(&event)){
             switch (event.type) {
                 case SDL_QUIT:
                     isRunning = false;
+                    break;
+                case SDL_USEREVENT:
+                    SDL_Log("Hii\n");
                     break;
                 case SDL_SYSWMEVENT:
                     if(event.syswm.msg->msg.win.msg == WM_COMMAND){
@@ -91,16 +94,14 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                             load_program(state,rom_path);
                             dump_memory(state,"test");
                             free(rom_path);
-                            TimerParams* params = NULL;
-                            params->state = state;
-                            params->renderer = renderer;
-                            timerId = SDL_AddTimer(30,timer_callback,(TimerParams*) params);
+                            SDL_AddTimer(3000,timer_callback,NULL);
                         }
                     }
                     break;
                 default:
                     break;
             }
+            SDL_Log("Hmmm\n");
         }
     }
 }
