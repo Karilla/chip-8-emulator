@@ -2,8 +2,7 @@
 // Created by benoit on 26/07/2022.
 //
 #include "state.h"
-#include <string.h>
-#include <stdio.h>
+#include "SDL2/SDL.h"
 
 void init_state(State* state){
     state->PC = 0x200;
@@ -19,15 +18,15 @@ void init_state(State* state){
 }
 
 void print_state(State* state){
-    printf("PC \t=\t%d\n",state->PC);
-    printf("Index \t=\t%d\n",state->index);
-    printf("Stack pointer \t=\t&d\n",state->stack_pointer);
-    printf("Delay Timer \t=\t%d\n",state->delay_timer);
-    printf("Sound Timer \t=\t%d\n",state->sound_timer);
+    SDL_Log("PC \t=\t%d\n",state->PC);
+    SDL_Log("Index \t=\t%d\n",state->index);
+    SDL_Log("Stack pointer \t=\t%d\n",state->stack_pointer);
+    SDL_Log("Delay Timer \t=\t%d\n",state->delay_timer);
+    SDL_Log("Sound Timer \t=\t%d\n",state->sound_timer);
     for(int i = 0; i < 15;++i){
-        printf("V%3d\t=\t%d\n",i,state->V[i]);
+       SDL_Log("V%3d\t=\t%d\n",i,state->V[i]);
     }
-    printf("VF\t=\t%d\n",state->V[15]);
+    SDL_Log("VF\t=\t%d\n",state->V[15]);
 }
 
 void load_font(State* state,const uint8_t* font){

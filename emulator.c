@@ -41,43 +41,39 @@ uint16_t fetch_instr(State* state){
 void decode_instr(State* state, uint16_t instruction){
     switch(instruction >> 12){
         case 0x0:
-            printf("Effacage de l'ecran\n");
+            SDL_Log("Effacage de l'ecran\n");
             break;
         case 0x1:
             jump(state,(instruction & ~0xF000));
-            printf("Jump\n");
+          SDL_Log("Jump\n");
             break;
         case 0x6:
             set_register(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
-            printf("Set %d at register %d\n",instruction & MASK_8BITS, (instruction >> 8) & MASK_4BITS);
+          SDL_Log("Set %d at register %d\n",instruction & MASK_8BITS, (instruction >> 8) & MASK_4BITS);
             break;
         case 0x7:
             simple_add(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
-            printf("Add value\n");
+          SDL_Log("Add value\n");
             break;
         case 0xA:
             set_index_register(state, instruction & MASK_12BITS);
-            printf("Set index register\n");
+          SDL_Log("Set index register\n");
             break;
         case 0xD:
-            printf("Display/Draw\n");
+           SDL_Log("Display/Draw\n");
             break;
         default:
-            printf("Instruction not implemented yet : %04x\n",instruction);
+           SDL_Log("Instruction not implemented yet : %04x\n",instruction);
             break;
     }
 }
 
-void clock_tick(TimerParams params){
-    State* state = params.state;
-    SDL_Renderer** renderer = params.renderer;
-
+void clock_tick(SDL_Renderer** renderer, State* state){
     Uint16 instr = fetch_instr(state);
     decode_instr(state,instr);
 }
 
 Uint32 timer_callback(Uint32 interval, void* params){
-    SDL_Log("Test\n");
     SDL_Event event;
     SDL_UserEvent userevent;
 
@@ -94,6 +90,5 @@ Uint32 timer_callback(Uint32 interval, void* params){
     event.user = userevent;
 
     SDL_PushEvent(&event);
-    SDL_Log("Test2\n");
     return(interval);
 }

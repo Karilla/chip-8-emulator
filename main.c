@@ -8,9 +8,10 @@
 #include "debug.h"
 #include "display.h"
 #include "screen.h"
+#include "constant .h"
 
 int main(int argc, char *argv[]){
-
+   SDL_Log("%d\n",DELAY_OP);
     State state;
     HWND windowHandle;
     SDL_Window* window;

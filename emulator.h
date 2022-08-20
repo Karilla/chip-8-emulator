@@ -18,7 +18,7 @@ uint16_t fetch_instr(State* state);
 
 void decode_instr(State* state, uint16_t instruction);
 
-void clock_tick(TimerParams params);
+void clock_tick(SDL_Renderer** renderer, State* state);
 
 Uint32 timer_callback(Uint32 interval, void* params);
 
