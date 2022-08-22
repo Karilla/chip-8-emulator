@@ -6,6 +6,7 @@
 #include "instruction.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "display.h"
 
 #define MASK_12BITS 0x0FFF
 #define MASK_8BITS 0x00FF
@@ -38,7 +39,7 @@ uint16_t fetch_instr(State* state){
     return temp;
 }
 
-void decode_instr(State* state, uint16_t instruction){
+void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
     switch(instruction >> 12){
         case 0x0:
             SDL_Log("Effacage de l'ecran\n");
@@ -53,14 +54,17 @@ void decode_instr(State* state, uint16_t instruction){
             break;
         case 0x7:
             simple_add(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
-          SDL_Log("Add value\n");
+          SDL_Log("Add %d at v%d\n", instruction & MASK_8BITS,(instruction >> 8) & MASK_4BITS);
             break;
         case 0xA:
             set_index_register(state, instruction & MASK_12BITS);
-          SDL_Log("Set index register\n");
+          SDL_Log("Set index register at %d\n", instruction & MASK_12BITS);
             break;
         case 0xD:
            SDL_Log("Display/Draw\n");
+            SDL_Log("Display with x = %d, y = %d, et n = %d\n",(instruction >> 8) & MASK_4BITS ,(instruction >> 4) & MASK_4BITS,instruction & MASK_4BITS);
+            display(state,(instruction >> 4) & MASK_4BITS, (instruction >> 8) & MASK_4BITS, instruction & MASK_4BITS, NULL);
+            update_grid(renderer, state);
             break;
         default:
            SDL_Log("Instruction not implemented yet : %04x\n",instruction);
@@ -70,7 +74,8 @@ void decode_instr(State* state, uint16_t instruction){
 
 void clock_tick(SDL_Renderer** renderer, State* state){
     Uint16 instr = fetch_instr(state);
-    decode_instr(state,instr);
+    decode_instr(state,instr,renderer);
+
 }
 
 Uint32 timer_callback(Uint32 interval, void* params){

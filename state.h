@@ -17,7 +17,7 @@ typedef struct State{
     uint8_t delay_timer;
     uint8_t sound_timer;
     uint8_t V[16];
-    bool screen[32][64];
+    int screen[64][32];
 }State;
 
 static uint8_t std_font[80] = {0xF0, 0x90, 0x90, 0x90, 0xF0, // 0

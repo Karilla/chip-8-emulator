@@ -16,7 +16,7 @@ void load_program(State* state, const char* filename);
 
 uint16_t fetch_instr(State* state);
 
-void decode_instr(State* state, uint16_t instruction);
+void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer);
 
 void clock_tick(SDL_Renderer** renderer, State* state);
 
