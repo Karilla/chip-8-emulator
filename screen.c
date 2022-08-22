@@ -76,7 +76,6 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                     isRunning = false;
                     break;
                 case SDL_USEREVENT:
-                    SDL_Log("Hii\n");
                   clock_tick(renderer, state);
                     break;
                 case SDL_SYSWMEVENT:

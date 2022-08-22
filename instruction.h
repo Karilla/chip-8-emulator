@@ -18,4 +18,12 @@ void set_index_register(State* state, uint16_t value);
 
 void display(State* state,uint8_t y, uint8_t x,uint8_t n, SDL_Renderer** renderer);
 
+void clear_screen(State* state, SDL_Renderer** rendere);
+
+void call_push(State* state, uint16_t address);
+
+void call_pop(State* state);
+
+
+
 #endif //REVISON_PRG2_INSTRUCTION_H

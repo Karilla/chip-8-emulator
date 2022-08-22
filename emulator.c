@@ -61,7 +61,6 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
           SDL_Log("Set index register at %d\n", instruction & MASK_12BITS);
             break;
         case 0xD:
-           SDL_Log("Display/Draw\n");
             SDL_Log("Display with x = %d, y = %d, et n = %d\n",(instruction >> 8) & MASK_4BITS ,(instruction >> 4) & MASK_4BITS,instruction & MASK_4BITS);
             display(state,(instruction >> 4) & MASK_4BITS, (instruction >> 8) & MASK_4BITS, instruction & MASK_4BITS, NULL);
             update_grid(renderer, state);
