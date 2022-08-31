@@ -13,6 +13,8 @@
 #include "debug.h"
 #include "display.h"
 #include "emulator.h"
+#include "widget.h"
+
 
 HWND getSDLWindowHandle(SDL_Window* win){
     SDL_SysWMinfo infoWindow;
@@ -42,12 +44,20 @@ void ActivateMenu(HWND windowRef)
 
     AppendMenu(hEdit, MF_STRING, ID_CONTROL, "Configure Controls");
 
+    AppendMenu(hDebug,MF_STRING, ID_LAUNCHDEBUG, "Launch Debug Session");
     AppendMenu(hDebug,MF_STRING, ID_DUMP, "Dump Memory");
     AppendMenu(hDebug,MF_STRING, ID_STEP, "Step by Step");
     AppendMenu(hDebug,MF_STRING, ID_MEM, "Memory Viewer");
     AppendMenu(hDebug,MF_STRING, ID_STATE, "State Viewer");
 
     AppendMenu(hHelp, MF_STRING, ID_ABOUT, "About");
+
+
+
+    EnableMenuItem(hMenuBar, ID_DUMP, MF_GRAYED);
+    EnableMenuItem(hMenuBar, ID_STEP, MF_GRAYED);
+    EnableMenuItem(hMenuBar, ID_MEM, MF_GRAYED);
+    EnableMenuItem(hMenuBar, ID_STATE, MF_GRAYED);
 
     SetMenu(windowRef, hMenuBar);
 }
@@ -62,12 +72,15 @@ void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer, HWND* 
     create_grid(renderer);
     SDL_SetWindowTitle(*window, "CHIP8-Emulator");
     *winHandle = getSDLWindowHandle(*window);
-    ActivateMenu(*winHandle);
     SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 }
 
 void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer, HWND winHandle){
     bool isRunning = true;
+    ActivateMenu(winHandle);
+    registerWindowsClass(window);
+    HWND modal_debug_handle = NULL;
+    bool isDebug = false;
     while (isRunning){
         SDL_Event event;
         while (SDL_PollEvent(&event)){
@@ -89,6 +102,20 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                             dump_memory(state,"test");
                             free(rom_path);
                             SDL_AddTimer(DELAY_OP,timer_callback,NULL);
+                        }
+                        else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_LAUNCHDEBUG){
+                            isDebug = true;
+                            char* rom_path = get_rom_file(winHandle);
+                            load_program(state,rom_path);
+                            dump_memory(state,"test");
+                            free(rom_path);
+                            //activate_debug_menu(menu_handle);
+                        }
+                        else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_ABOUT) {
+                            if(!IsWindow(modal_debug_handle)){
+                                modal_debug_handle = display_modal(winHandle);
+                            }
+
                         }
                     }
                     break;
@@ -118,4 +145,45 @@ char* get_rom_file(HWND win_handle){
     strncpy(file_path,ofn.lpstrFile, strlen(ofn.lpstrFile));
     printf("%s\n",ofn.lpstrFile);
     return file_path;
+}
+
+LRESULT CALLBACK DialogProc(HWND hWnd, UINT msg, WPARAM wp,LPARAM lp){
+    switch(msg){
+        case WM_CLOSE:
+            SDL_Log("Bye\n");
+            DestroyWindow(hWnd);
+            break;
+        case WM_CREATE:
+            SDL_Log("Test\n");
+            create_table(hWnd);
+            break;
+        default:
+            return DefWindowProcW(hWnd,msg,wp,lp);
+    }
+}
+
+void registerWindowsClass(SDL_Window* win){
+    SDL_SysWMinfo infoWindow;
+    SDL_VERSION(&infoWindow.version);
+    if(!SDL_GetWindowWMInfo(win, &infoWindow)){
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR,"Erroorr\n");
+        exit(1);
+    }
+    WNDCLASSW dialog = {0};
+    dialog.hbrBackground = (HBRUSH)COLOR_WINDOW;
+    dialog.hCursor = LoadCursor(NULL,IDC_ARROW);
+    dialog.hInstance = infoWindow.info.win.hinstance;
+    dialog.lpszClassName = L"myDialogClass";
+    dialog.lpfnWndProc = DialogProc;
+
+    RegisterClassW(&dialog);
+}
+
+HWND display_modal(HWND winHandle){
+    return CreateWindowExW(0,L"myDialogClass",L"Debug", WS_VISIBLE | WS_OVERLAPPEDWINDOW, 400 ,400,200,200,winHandle,NULL,NULL,NULL);
+    //InitCommonControls();
+}
+
+void create_table(HWND winHandle){
+    create_label(winHandle,1,1,50,50,"Test");
 }

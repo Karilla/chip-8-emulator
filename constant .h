@@ -9,6 +9,7 @@
 #define ID_STEP 5
 #define ID_MEM 6
 #define ID_STATE 7
+#define ID_LAUNCHDEBUG 8
 
 #define DELAY_OP 33
 
