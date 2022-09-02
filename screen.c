@@ -117,6 +117,10 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                             }
 
                         }
+                       else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_CONTROL){
+                           ShowWindow(CreateWindowExA(WS_EX_WINDOWEDGE,NULL,NULL,WS_CHILD,50,50,300,200,winHandle,NULL,NULL,NULL),4);
+
+                       }
                     }
                     break;
                 default:
@@ -185,5 +189,7 @@ HWND display_modal(HWND winHandle){
 }
 
 void create_table(HWND winHandle){
-    create_label(winHandle,1,1,50,50,"Test");
+    //HWND label1 = create_label(winHandle,1,1,50,50,"Test");
+   //set_Label_text(label1,"Hello world");
+   create_edit(winHandle,10,10,NULL,1);
 }

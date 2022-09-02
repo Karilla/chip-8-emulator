@@ -17,5 +17,9 @@ HWND create_edit(HWND winHandle, int x, int y, const char* placeHolder, bool rea
 char* get_text_value(HWND edit);
 
 void set_text_value(HWND edit, char* text);
+
+HWND create_button(HWND parent, char* text, int id);
+
+void edit_button_text(HWND button, char* text);
 #endif //REVISON_PRG2_WIDGET_H
 
