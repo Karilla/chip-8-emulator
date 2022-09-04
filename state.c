@@ -9,7 +9,7 @@ void init_state(State* state){
     state->index = 0;
     state->delay_timer = 0;
     state->sound_timer = 0;
-    state->stack_pointer = 0;
+    state->stack_pointer = 4095;
     memset(state->memory,0,4096);
     memset(state->V,0,16);
     memset(state->stack,0,16);
