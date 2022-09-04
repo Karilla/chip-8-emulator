@@ -42,11 +42,22 @@ uint16_t fetch_instr(State* state){
 void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
     switch(instruction >> 12){
         case 0x0:
-            SDL_Log("Effacage de l'ecran\n");
+            if(((instruction >> 4) & MASK_4BITS) == 0xE){
+                SDL_Log("Effacage de l'ecran\n");
+                //clear_screen(state, renderer);
+            }
             break;
         case 0x1:
             jump(state,(instruction & ~0xF000));
           SDL_Log("Jump\n");
+            break;
+        case 0x2:
+            break;
+        case 0x3:
+            break;
+        case 0x4:
+            break;
+        case 0x5:
             break;
         case 0x6:
             set_register(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
@@ -56,14 +67,26 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
             simple_add(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
           SDL_Log("Add %d at v%d\n", instruction & MASK_8BITS,(instruction >> 8) & MASK_4BITS);
             break;
+        case 0x8:
+            break;
+        case 0x9:
+            break;
         case 0xA:
             set_index_register(state, instruction & MASK_12BITS);
           SDL_Log("Set index register at %d\n", instruction & MASK_12BITS);
+            break;
+        case 0xB:
+            break;
+        case 0xC:
             break;
         case 0xD:
             SDL_Log("Display with x = %d, y = %d, et n = %d\n",(instruction >> 8) & MASK_4BITS ,(instruction >> 4) & MASK_4BITS,instruction & MASK_4BITS);
             display(state,(instruction >> 4) & MASK_4BITS, (instruction >> 8) & MASK_4BITS, instruction & MASK_4BITS, NULL);
             update_grid(renderer, state);
+            break;
+        case 0xE:
+            break;
+        case 0xF:
             break;
         default:
            SDL_Log("Instruction not implemented yet : %04x\n",instruction);

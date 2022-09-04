@@ -40,3 +40,13 @@ void load_font(State* state,const uint8_t* font){
     }
 }
 
+void push_stack(State* state, uint16_t address){
+    state->memory[state->stack_pointer] = address;
+    state->stack_pointer -= 2;
+}
+
+uint16_t pop_stack(State* state){
+    uint16_t instr = state->memory[state->stack_pointer];
+    state->stack_pointer += 2;
+    return instr;
+}

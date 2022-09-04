@@ -41,5 +41,9 @@ void init_state(State* state);
 
 void print_state(State* state);
 
+void push_stack(State* state, uint16_t address);
+
+uint16_t pop_stack(State* state);
+
 void load_font(State* state,const uint8_t* font);
 #endif //REVISON_PRG2_STATE_H
