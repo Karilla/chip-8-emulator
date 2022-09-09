@@ -20,7 +20,7 @@ void set_index_register(State* state, uint16_t value){
     state->index = value;
 }
 
-void display(State* state,uint8_t y, uint8_t x,uint8_t n, SDL_Renderer** renderer){
+void display(State* state,uint8_t y, uint8_t x,uint8_t n){
     int x_sprite = (state->V[x] & 63);
     int y_sprite = (state->V[y] & 31);
     state->V[15] = 0;
@@ -46,4 +46,106 @@ void display(State* state,uint8_t y, uint8_t x,uint8_t n, SDL_Renderer** rendere
             break;
         }
     }
+}
+
+void call_push(State* state, uint16_t address){
+    push_stack(state,state->PC);
+    state->PC = address;
+}
+
+void clear_screen(State* state){
+    for(int x = 0; x < 64;++x){
+        for(int y = 0; y < 32; ++y){
+            state->screen[x][y] = 0;
+        }
+    }
+}
+void skip_if_vx_egal(State* state,uint8_t x, uint8_t value){
+    if(state->V[x] == value){
+        state->PC +=2;
+    }
+}
+
+void skip_if_not_vx_egal(State* state, uint8_t x, uint8_t value){
+    if(state->V[x] != value){
+        state->PC +=2;
+    }
+}
+
+void skip_if_vx_vy_egal(State* state, uint8_t x, uint8_t y){
+    if(state->V[x] == state->V[y]){
+        state->PC +=2;
+    }
+}
+
+void skip_if_vx_vy_not_egal(State* state, uint8_t x, uint8_t y){
+    if(state->V[x] != state->V[y]){
+        state->PC +=2;
+    }
+}
+
+void set(State* state, uint8_t x, uint8_t y){
+    state->V[x] = state->V[y];
+}
+
+void or(State* state, uint8_t x, uint8_t y){
+    state->V[x] |= state->V[y];
+}
+
+void and(State* state, uint8_t x, uint8_t y){
+    state->V[x] &= state->V[y];
+}
+
+void xor(State* state, uint8_t x, uint8_t y){
+    state->V[x] ^= state->V[y]w;
+}
+
+void add_register(State* state, uint8_t x, uint8_t y){
+    if((x > (UCHAR_MAX - y)) && (y > (UCHAR_MAX - x))){
+        state->V[0xf] = 1;
+    }
+    state->V[0xF] = 0;
+    state->V[x] += state->V[y];
+}
+
+void substract_register(State* state, uint8_t x, uint8_t y, bool mode){
+    if(mode){
+        if(state->V[x] > state->V[y]){
+            state->V[0xF] = 1;
+        }
+        state->V[0xF] = 0;
+        state->V[x] -= state->V[y];
+    }
+    else{
+        if(state->V[y] > state->V[x]) {
+            state->V[0xF] = 1;
+        }
+        state->V[0xF] = 0;
+        state->V[x] = state->V[y] - state->V[x];
+    }
+}
+
+void shift(State* state, uint8_t x, uint8_t y, bool direction){
+    state->V[x] = state->V[y];
+    if(direction){
+        state->V[0xf] = 0;
+        if((state->V[x] & 0x01) > 0){
+            state->V[0xf] = 1;
+        }
+        state->V[0xf] >>= 1;
+    } else{
+        state->V[0xf] = 0;
+        if((state->V[x] & 0x80) > 0) {
+            state->V[0xf] = 1;
+        }
+        state->V[0xf] <<= 1;
+    }
+}
+
+void jump_offset(State* state, uint16_t value){
+    state->PC = state->V[0] + value;
+}
+
+void random(State* state,uint8_t reg, uint8_t modulo){
+    state->V[reg] = rand() & modulo;
 }

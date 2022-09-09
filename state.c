@@ -3,6 +3,7 @@
 //
 #include "state.h"
 #include "SDL2/SDL.h"
+#include <time.h>
 
 void init_state(State* state){
     state->PC = 0x200;
@@ -20,6 +21,7 @@ void init_state(State* state){
         }
     }
     load_font(state,std_font);
+    srand(time(NULL));
 }
 
 void print_state(State* state){

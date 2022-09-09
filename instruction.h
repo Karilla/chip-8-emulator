@@ -16,14 +16,36 @@ void set_register(State* state,uint8_t reg, uint8_t value);
 
 void set_index_register(State* state, uint16_t value);
 
-void display(State* state,uint8_t y, uint8_t x,uint8_t n, SDL_Renderer** renderer);
+void display(State* state,uint8_t y, uint8_t x,uint8_t n);
 
-void clear_screen(State* state, SDL_Renderer** rendere);
+void clear_screen(State* state);
 
 void call_push(State* state, uint16_t address);
 
-void call_pop(State* state);
+void skip_if_vx_egal(State* state,uint8_t x, uint8_t value);
 
+void skip_if_not_vx_egal(State* state, uint8_t x, uint8_t value);
 
+void skip_if_vx_vy_egal(State* state, uint8_t x, uint8_t y);
+
+void skip_if_vx_vy_not_egal(State* state, uint8_t x, uint8_t y);
+
+void set(State* state, uint8_t x, uint8_t y);
+
+void or(State* state, uint8_t x, uint8_t y);
+
+void and(State* state, uint8_t x, uint8_t y);
+
+void xor(State* state, uint8_t x, uint8_t y);
+
+void add_register(State* state, uint8_t x, uint8_t y);
+
+void substract_register(State* state, uint8_t x, uint8_t y, bool mode);
+
+void shift(State* state, uint8_t x, uint8_t y, bool direction);
+
+void jump_offset(State* state, uint16_t value);
+
+void random(State* state,uint8_t reg, uint8_t modulo);
 
 #endif //REVISON_PRG2_INSTRUCTION_H

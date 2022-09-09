@@ -42,38 +42,70 @@ uint16_t fetch_instr(State* state){
 void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
     switch(instruction >> 12){
         case 0x0:
-            if(((instruction >> 4) & MASK_4BITS) == 0xE){
+            if((instruction & MASK_12BITS) == 0x0E0){
                 SDL_Log("Effacage de l'ecran\n");
-                //clear_screen(state, renderer);
+                clear_screen(state);
+                update_grid(renderer, state);
+            }
+            if((instruction & MASK_12BITS) == 0x0EE){
+                state->PC = pop_stack(state);
+                SDL_Log("Popped from the stack\n");
             }
             break;
         case 0x1:
             jump(state,(instruction & ~0xF000));
-          SDL_Log("Jump\n");
+            SDL_Log("Jump\n");
             break;
         case 0x2:
+            call_push(state, instruction & MASK_12BITS);
+            SDL_Log("Jump and push stack\n");
             break;
         case 0x3:
+            skip_if_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x4:
+            skip_if_not_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x5:
+            skip_if_vx_vy_egal(state,(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS);
             break;
         case 0x6:
             set_register(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
-          SDL_Log("Set %d at register %d\n",instruction & MASK_8BITS, (instruction >> 8) & MASK_4BITS);
+            SDL_Log("Set %d at register %d\n",instruction & MASK_8BITS, (instruction >> 8) & MASK_4BITS);
             break;
         case 0x7:
             simple_add(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
-          SDL_Log("Add %d at v%d\n", instruction & MASK_8BITS,(instruction >> 8) & MASK_4BITS);
+             SDL_Log("Add %d at v%d\n", instruction & MASK_8BITS,(instruction >> 8) & MASK_4BITS);
             break;
         case 0x8:
+            switch(instruction & MASK_4BITS){
+                case 1:
+                    set(state, (instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 0xE:
+                    break;
+                default:
+                    break;
+            }
             break;
         case 0x9:
+            skip_if_vx_vy_not_egal(state,(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS);
             break;
         case 0xA:
             set_index_register(state, instruction & MASK_12BITS);
-          SDL_Log("Set index register at %d\n", instruction & MASK_12BITS);
+            SDL_Log("Set index register at %d\n", instruction & MASK_12BITS);
             break;
         case 0xB:
             break;
@@ -81,7 +113,7 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
             break;
         case 0xD:
             SDL_Log("Display with x = %d, y = %d, et n = %d\n",(instruction >> 8) & MASK_4BITS ,(instruction >> 4) & MASK_4BITS,instruction & MASK_4BITS);
-            display(state,(instruction >> 4) & MASK_4BITS, (instruction >> 8) & MASK_4BITS, instruction & MASK_4BITS, NULL);
+            display(state,(instruction >> 4) & MASK_4BITS, (instruction >> 8) & MASK_4BITS, instruction & MASK_4BITS);
             update_grid(renderer, state);
             break;
         case 0xE:
