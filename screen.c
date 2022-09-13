@@ -26,7 +26,7 @@ HWND getSDLWindowHandle(SDL_Window* win){
     return(infoWindow.info.win.window);
 }
 
-void ActivateMenu(HWND windowRef)
+HMENU ActivateMenu(HWND windowRef)
 {
     HMENU hMenuBar = CreateMenu();
     HMENU hFile = CreateMenu();
@@ -51,8 +51,6 @@ void ActivateMenu(HWND windowRef)
     AppendMenu(hDebug,MF_STRING, ID_STATE, "State Viewer");
 
     AppendMenu(hHelp, MF_STRING, ID_ABOUT, "About");
-
-
 
     EnableMenuItem(hMenuBar, ID_DUMP, MF_GRAYED);
     EnableMenuItem(hMenuBar, ID_STEP, MF_GRAYED);
@@ -117,7 +115,7 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                             }
 
                         }
-                       else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_CONTROL){
+                        else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_CONTROL){
                            ShowWindow(CreateWindowExA(WS_EX_WINDOWEDGE,NULL,NULL,WS_CHILD,50,50,300,200,winHandle,NULL,NULL,NULL),4);
 
                        }
@@ -141,13 +139,12 @@ char* get_rom_file(HWND win_handle){
     ofn.lpstrFile    = filename;
     ofn.lpstrFile[0] = '\0';
     ofn.nMaxFile     = MAX_PATH;
-    ofn.lpstrTitle   = "Select a File, yo!";
+    ofn.lpstrTitle   = "Select your chip-8 ROM!";
     ofn.lpstrInitialDir = "..";
     ofn.Flags        = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
     GetOpenFileName(&ofn);
     char* file_path = calloc(MAX_PATH,sizeof(char));
     strncpy(file_path,ofn.lpstrFile, strlen(ofn.lpstrFile));
-    printf("%s\n",ofn.lpstrFile);
     return file_path;
 }
 

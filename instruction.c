@@ -97,7 +97,7 @@ void and(State* state, uint8_t x, uint8_t y){
 }
 
 void xor(State* state, uint8_t x, uint8_t y){
-    state->V[x] ^= state->V[y]w;
+    state->V[x] ^= state->V[y]   ;
 }
 
 void add_register(State* state, uint8_t x, uint8_t y){
@@ -148,4 +148,41 @@ void jump_offset(State* state, uint16_t value){
 
 void random(State* state,uint8_t reg, uint8_t modulo){
     state->V[reg] = rand() & modulo;
+}
+
+
+void skip_if_key(State* state, uint8_t x, uint8_t key){
+
+}
+
+void skip_if_not_key(State* state, uint8_t x, uint8_t key) {
+
+}
+
+void get_timer_value(State* state, uint8_t x){
+
+}
+
+void set_timer_value(State* state, uint8_t x){
+
+}
+
+void set_sound_timer(State* state, uint8_t x){
+
+}
+
+void add_index(State* state, uint8_t x){
+
+}
+
+void get_key(State* state, uint8_t x){
+
+}
+
+void get_character(State* state, uint8_t x){
+
+}
+
+void binary_to_dec(State* state, uint8_t x){
+
 }

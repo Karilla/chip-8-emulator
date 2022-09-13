@@ -79,23 +79,33 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
             break;
         case 0x8:
             switch(instruction & MASK_4BITS){
+                case 0:
+                   set(state, (instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
+                   break;
                 case 1:
-                    set(state, (instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
-                    break;
+                  or(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
+                  break;
                 case 2:
-                    break;
+                   and(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
+                  break;
                 case 3:
-                    break;
+                   xor(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
+                  break;
                 case 4:
-                    break;
+                   add_register(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
+                  break;
                 case 5:
+                   substract_register(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS, true );
                     break;
                 case 6:
+                   shift(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS,true);
                     break;
                 case 7:
+                   substract_register(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS, false );
                     break;
                 case 0xE:
-                    break;
+                   shift(state,(instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS,false);
+                  break;
                 default:
                     break;
             }
@@ -129,7 +139,6 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
 void clock_tick(SDL_Renderer** renderer, State* state){
     Uint16 instr = fetch_instr(state);
     decode_instr(state,instr,renderer);
-
 }
 
 Uint32 timer_callback(Uint32 interval, void* params){
