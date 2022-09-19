@@ -150,7 +150,6 @@ void random(State* state,uint8_t reg, uint8_t modulo){
     state->V[reg] = rand() & modulo;
 }
 
-
 void skip_if_key(State* state, uint8_t x, uint8_t key){
 
 }

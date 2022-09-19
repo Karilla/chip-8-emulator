@@ -4,10 +4,6 @@
 #include "SDL2/SDL.h"
 #include <windows.h>
 #include "state.h"
-#include "instruction.h"
-#include "emulator.h"
-#include "debug.h"
-#include "display.h"
 #include "screen.h"
 #include "constant .h"
 
