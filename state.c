@@ -10,7 +10,7 @@ void init_state(State* state){
     state->index = 0;
     state->delay_timer = 0;
     state->sound_timer = 0;
-    state->stack_pointer = 4095;
+    state->stack_pointer = 4094;
     memset(state->memory,0,4096);
     memset(state->V,0,16);
     memset(state->stack,0,16);
@@ -43,10 +43,13 @@ void load_font(State* state,const uint8_t* font){
 }
 
 void push_stack(State* state, uint16_t address){
-    state->memory[state->stack_pointer] = address;
+    state->memory[state->stack_pointer] = (uint8_t) (address >> 8);
+    state->memory[state->stack_pointer + 1] = (uint8_t) address ;
     state->stack_pointer -= 2;
 }
 
+
+//TODO : Fix this function actually return one case of memory should return two
 uint16_t pop_stack(State* state){
     uint16_t instr = state->memory[state->stack_pointer];
     state->stack_pointer += 2;
