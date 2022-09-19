@@ -12,7 +12,6 @@
 #include "constant .h"
 
 int main(int argc, char *argv[]){
-   /*
    SDL_Log("%d\n",DELAY_OP);
     State state;
     HWND windowHandle;
@@ -22,19 +21,7 @@ int main(int argc, char *argv[]){
     init_app(&state, &window, &renderer,&windowHandle);
 
     launch_poll_event(&state,window,&renderer, windowHandle);
-    */
 
-   State state;
-   init_state(&state);
-   print_state(&state);
-   print_state(&state);
-   push_stack(&state,0xABCD);
-   push_stack(&state,(uint8_t)3);
-   push_stack(&state,(uint8_t)4);
-   push_stack(&state,(uint8_t)5);
-   print_state(&state);
-   dump_memory(&state,"../test_stack.txt");
-   SDL_Log("%d\n", pop_stack(&state));
 
 }
 

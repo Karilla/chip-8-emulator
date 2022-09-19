@@ -51,7 +51,8 @@ void push_stack(State* state, uint16_t address){
 
 //TODO : Fix this function actually return one case of memory should return two
 uint16_t pop_stack(State* state){
-    uint16_t instr = state->memory[state->stack_pointer];
     state->stack_pointer += 2;
+    uint16_t instr = (state->memory[state->stack_pointer] << 8);
+    instr |= state->memory[state->stack_pointer + 1];
     return instr;
 }
