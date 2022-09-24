@@ -11,6 +11,7 @@
 #define ID_MEM 6
 #define ID_STATE 7
 #define ID_LAUNCHDEBUG 8
+#define ID_PAUSE 9
 
 //Contant for the duration between to clock tick
 #define DELAY_OP 33

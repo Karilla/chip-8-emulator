@@ -8,6 +8,7 @@
 #include "stdbool.h"
 #include "constant .h"
 #include <commdlg.h>
+#include "state.h"
 #include "windows.h"
 #include <tchar.h>
 #include "debug.h"
@@ -40,6 +41,7 @@ HMENU ActivateMenu(HWND windowRef)
     AppendMenu(hMenuBar, MF_POPUP, (UINT_PTR)hHelp, "Help");
 
     AppendMenu(hFile, MF_STRING, ID_LOAD, "Load ROM");
+    AppendMenu(hFile, MF_STRING, ID_PAUSE, "Pause emulation");
     AppendMenu(hFile, MF_STRING, ID_EXIT, "Exit");
 
     AppendMenu(hEdit, MF_STRING, ID_CONTROL, "Configure Controls");
@@ -79,15 +81,66 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
     registerWindowsClass(window);
     HWND modal_debug_handle = NULL;
     bool isDebug = false;
+    enum Control control;
     while (isRunning){
         SDL_Event event;
         while (SDL_PollEvent(&event)){
+           control = NO_KEY;
+           const Uint8* keyState = SDL_GetKeyboardState(NULL);
+           if(keyState[SDL_SCANCODE_1]){
+              control = KEY_1;
+           }
+           else if(keyState[SDL_SCANCODE_2]){
+            control = KEY_2;
+           }
+           else if(keyState[SDL_SCANCODE_3]){
+            control = KEY_3;
+           }
+           else if(keyState[SDL_SCANCODE_4]){
+            control = KEY_4;
+           }
+           else if(keyState[SDL_SCANCODE_Q]){
+            control = KEY_Q;
+           }
+           else if(keyState[SDL_SCANCODE_W]){
+            control = KEY_W;
+           }
+           else if(keyState[SDL_SCANCODE_E]){
+              control = KEY_E;
+           }
+           else if(keyState[SDL_SCANCODE_R]){
+              control = KEY_R;
+           }
+           else if(keyState[SDL_SCANCODE_A]){
+              control = KEY_A;
+           }
+           else if(keyState[SDL_SCANCODE_S]){
+            control = KEY_S;
+           }
+           else if(keyState[SDL_SCANCODE_D]){
+            control = KEY_D;
+           }
+           else if(keyState[SDL_SCANCODE_F]){
+            control = KEY_F;
+           }
+           else if(keyState[SDL_SCANCODE_Y]){
+            control = KEY_Y;
+           }
+           else if(keyState[SDL_SCANCODE_X]){
+              control = KEY_X;
+           }
+           else if(keyState[SDL_SCANCODE_C]){
+              control = KEY_C;
+           }
+           else if(keyState[SDL_SCANCODE_V]){
+              control = KEY_V;
+           }
             switch (event.type) {
                 case SDL_QUIT:
                     isRunning = false;
                     break;
                 case SDL_USEREVENT:
-                  clock_tick(renderer, state);
+                  clock_tick(renderer, state,control);
                     break;
                 case SDL_SYSWMEVENT:
                     if(event.syswm.msg->msg.win.msg == WM_COMMAND){
@@ -97,7 +150,6 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                         else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_LOAD){
                             char* rom_path = get_rom_file(winHandle);
                             load_program(state,rom_path);
-                            dump_memory(state,"test");
                             free(rom_path);
                             SDL_AddTimer(DELAY_OP,timer_callback,NULL);
                         }
@@ -121,6 +173,8 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                        }
                     }
                     break;
+               case SDL_KEYUP:
+                  break;
                 default:
                     break;
             }

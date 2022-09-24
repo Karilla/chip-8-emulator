@@ -8,6 +8,26 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+enum Control{
+   NO_KEY,
+   KEY_1,
+   KEY_2,
+   KEY_3,
+   KEY_4,
+   KEY_Q,
+   KEY_W,
+   KEY_E,
+   KEY_R,
+   KEY_A,
+   KEY_S,
+   KEY_D,
+   KEY_F,
+   KEY_Y,
+   KEY_X,
+   KEY_C,
+   KEY_V
+};
+
 typedef struct State{
     uint8_t memory[4096];
     uint16_t PC;
@@ -19,6 +39,8 @@ typedef struct State{
     uint8_t V[16];
     int screen[64][32];
 }State;
+
+
 
 static uint8_t std_font[80] = {0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
                         0x20, 0x60, 0x20, 0x20, 0x70, // 1

@@ -159,15 +159,15 @@ void skip_if_not_key(State* state, uint8_t x, uint8_t key) {
 }
 
 void get_timer_value(State* state, uint8_t x){
-
+   state->V[x] = state->delay_timer;
 }
 
 void set_timer_value(State* state, uint8_t x){
-
+   state->delay_timer = state->V[x];
 }
 
 void set_sound_timer(State* state, uint8_t x){
-
+   state->sound_timer = state->V[x];
 }
 
 void add_index(State* state, uint8_t x){

@@ -39,7 +39,7 @@ uint16_t fetch_instr(State* state){
     return temp;
 }
 
-void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
+void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,enum Control controlKey){
     switch(instruction >> 12){
         case 0x0:
             if((instruction & MASK_12BITS) == 0x0E0){
@@ -138,9 +138,9 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer){
     }
 }
 
-void clock_tick(SDL_Renderer** renderer, State* state){
+void clock_tick(SDL_Renderer** renderer, State* state, enum Control controlKey){
     Uint16 instr = fetch_instr(state);
-    decode_instr(state,instr,renderer);
+    decode_instr(state,instr,renderer,controlKey);
 }
 
 Uint32 timer_callback(Uint32 interval, void* params){
