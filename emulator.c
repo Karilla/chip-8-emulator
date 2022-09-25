@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "display.h"
+#include "debug.h"
 
 #define MASK_12BITS 0x0FFF
 #define MASK_8BITS 0x00FF
@@ -139,6 +140,7 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
         case 0xF:
            switch(instruction & MASK_8BITS){
               case 0x07:
+
                  get_timer_value(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x15:

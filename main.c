@@ -4,6 +4,8 @@
 #include "SDL2/SDL.h"
 #include <windows.h>
 #include "state.h"
+#include "debug.h"
+#include "instruction.h"
 #include "screen.h"
 #include "constant .h"
 
@@ -17,7 +19,6 @@ int main(int argc, char *argv[]){
     init_app(&state, &window, &renderer,&windowHandle);
 
     launch_poll_event(&state,window,&renderer, windowHandle);
-
 
 }
 

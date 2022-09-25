@@ -193,7 +193,7 @@ void get_character(State* state, uint8_t x){
 
 void binary_to_dec(State* state, uint8_t x){
    state->memory[state->index] = state->V[x] / 100;
-   state->memory[state->index + 1] = state->V[x] / 10;
+   state->memory[state->index + 1] = (state->V[x] / 10) % 10;
    state->memory[state->index + 2] = state->V[x] % 10;
 }
 
@@ -204,7 +204,7 @@ void store_memory(State* state,uint8_t x){
 }
 
 void load_memory(State* state, uint8_t x){
-   for(uint8_t i = 0; i < x; ++i){
-      state->V[x] = state->memory[state->index + i];
+   for(uint8_t i = 0; i <= x; ++i){
+      state->V[i] = state->memory[state->index + i];
    }
 }
