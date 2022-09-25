@@ -198,8 +198,8 @@ void binary_to_dec(State* state, uint8_t x){
 }
 
 void store_memory(State* state,uint8_t x){
-   for(uint8_t i = 0; i < x; ++i){
-      state->memory[state->index + i] = state->V[x];
+   for(uint8_t i = 0; i <= x; ++i){
+      state->memory[state->index + i] = state->V[i];
    }
 }
 
