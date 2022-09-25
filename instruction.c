@@ -132,13 +132,13 @@ void shift(State* state, uint8_t x, uint8_t y, bool direction){
         if((state->V[x] & 0x01) > 0){
             state->V[0xf] = 1;
         }
-        state->V[0xf] >>= 1;
+        state->V[x] >>= 1;
     } else{
         state->V[0xf] = 0;
         if((state->V[x] & 0x80) > 0) {
             state->V[0xf] = 1;
         }
-        state->V[0xf] <<= 1;
+        state->V[x] <<= 1;
     }
 }
 
