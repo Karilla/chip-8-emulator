@@ -129,6 +129,12 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
             update_grid(renderer, state);
             break;
         case 0xE:
+           if((instruction & MASK_8BITS ) == 0x65){
+              skip_if_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
+           }
+           else if((instruction & MASK_8BITS) == 0xA1){
+              skip_if_not_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
+           }
             break;
         case 0xF:
             break;
@@ -161,4 +167,8 @@ Uint32 timer_callback(Uint32 interval, void* params){
 
     SDL_PushEvent(&event);
     return(interval);
+}
+
+uint8_t decode_control_key(enum Control controlKey){
+   return (uint8_t) controlKey;
 }

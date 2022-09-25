@@ -151,11 +151,15 @@ void random(State* state,uint8_t reg, uint8_t modulo){
 }
 
 void skip_if_key(State* state, uint8_t x, uint8_t key){
-
+   if(key == state->V[x]){
+      state->PC += 2;
+   }
 }
 
 void skip_if_not_key(State* state, uint8_t x, uint8_t key) {
-
+   if(key != state->V[x]){
+      state->PC += 2;
+   }
 }
 
 void get_timer_value(State* state, uint8_t x){
@@ -171,17 +175,36 @@ void set_sound_timer(State* state, uint8_t x){
 }
 
 void add_index(State* state, uint8_t x){
-
+   state->index += state->V[x];
 }
 
-void get_key(State* state, uint8_t x){
-
+void get_key(State* state, uint8_t x, uint8_t key){
+   if(key == 0){
+      state->PC -= 2;
+   }
+   else{
+      state->V[x] = key;
+   }
 }
 
 void get_character(State* state, uint8_t x){
-
+   state->index = 512 + state->V[x];
 }
 
 void binary_to_dec(State* state, uint8_t x){
+   state->memory[state->index] = state->V[x] / 100;
+   state->memory[state->index + 1] = state->V[x] / 10;
+   state->memory[state->index + 2] = state->V[x] % 10;
+}
 
+void store_memory(State* state,uint8_t x){
+   for(uint8_t i = 0; i < x; ++i){
+      state->memory[state->index + i] = state->V[x];
+   }
+}
+
+void load_memory(State* state, uint8_t x){
+   for(uint8_t i = 0; i < x; ++i){
+      state->V[x] = state->memory[state->index + i];
+   }
 }

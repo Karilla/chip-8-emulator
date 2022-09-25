@@ -17,4 +17,6 @@ void clock_tick(SDL_Renderer** renderer, State* state, enum Control controlKey);
 
 Uint32 timer_callback(Uint32 interval, void* params);
 
+uint8_t decode_control_key(enum Control controlKey);
+
 #endif //REVISON_PRG2_EMULATOR_H
