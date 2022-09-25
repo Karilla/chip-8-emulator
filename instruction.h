@@ -66,4 +66,8 @@ void get_character(State* state, uint8_t x);
 
 void binary_to_dec(State* state, uint8_t x);
 
+void store_memory(State* state,uint8_t x);
+
+void load_memory(State* state, uint8_t x);
+
 #endif //REVISON_PRG2_INSTRUCTION_H

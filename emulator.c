@@ -137,6 +137,37 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
            }
             break;
         case 0xF:
+           switch(instruction & MASK_8BITS){
+              case 0x07:
+                 get_timer_value(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              case 0x15:
+                 set_timer_value(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              case 0x18:
+                 set_sound_timer(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              case 0x1E:
+                 add_index(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              case 0x0A:
+                 get_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
+                 break;
+              case 0x29:
+                 get_character(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              case 0x33:
+                 binary_to_dec(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              case 0x55:
+                 store_memory(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              case 0x65:
+                 load_memory(state,(instruction >> 8) & MASK_4BITS);
+                 break;
+              default:
+                 break;
+           }
             break;
         default:
            SDL_Log("Instruction not implemented yet : %04x\n",instruction);
