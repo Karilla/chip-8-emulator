@@ -19,4 +19,6 @@ Uint32 timer_callback(Uint32 interval, void* params);
 
 uint8_t decode_control_key(enum Control controlKey);
 
+void update_timer(State* state);
+
 #endif //REVISON_PRG2_EMULATOR_H

@@ -179,6 +179,7 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
 
 void clock_tick(SDL_Renderer** renderer, State* state, enum Control controlKey){
     Uint16 instr = fetch_instr(state);
+    update_timer(state);
     decode_instr(state,instr,renderer,controlKey);
 }
 
@@ -204,4 +205,9 @@ Uint32 timer_callback(Uint32 interval, void* params){
 
 uint8_t decode_control_key(enum Control controlKey){
    return (uint8_t) controlKey;
+}
+
+void update_timer(State* state){
+    if(state->delay_timer > 0) state->delay_timer--;
+    if(state->sound_timer > 0) state->sound_timer--;
 }
