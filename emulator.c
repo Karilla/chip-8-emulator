@@ -140,31 +140,39 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
         case 0xF:
            switch(instruction & MASK_8BITS){
               case 0x07:
-
+                SDL_Log("Recupere la valeur du timer dans v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_timer_value(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x15:
+                  SDL_Log("Mets la valeur du timer depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  set_timer_value(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x18:
+                  SDL_Log("Mets la valeur du timer de son depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  set_sound_timer(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x1E:
+                  SDL_Log("Ajoute a l'index depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  add_index(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x0A:
+                  SDL_Log("Attends l'entrée de l'utilisateur depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
                  break;
               case 0x29:
+                  SDL_Log("Recupere le caractere a afficher depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_character(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x33:
+                  SDL_Log("Recupere la valeur du timer dans v%d\n",(instruction >> 8) & MASK_4BITS);
                  binary_to_dec(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x55:
+                  SDL_Log("Store la valeur des registre jusqua v%d\n",(instruction >> 8) & MASK_4BITS);
                  store_memory(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x65:
+                  SDL_Log("Recupere depuis la memoire jusqua v%d\n",(instruction >> 8) & MASK_4BITS);
                  load_memory(state,(instruction >> 8) & MASK_4BITS);
                  break;
               default:

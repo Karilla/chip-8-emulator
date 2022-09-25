@@ -188,7 +188,7 @@ void get_key(State* state, uint8_t x, uint8_t key){
 }
 
 void get_character(State* state, uint8_t x){
-   state->index = 512 + state->V[x];
+   state->index = 0x050 + state->V[x];
 }
 
 void binary_to_dec(State* state, uint8_t x){
