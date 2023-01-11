@@ -68,6 +68,7 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
             skip_if_not_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x5:
+        SDL_Log("Skif if v%d and v%d aren't equal");
             skip_if_vx_vy_egal(state,(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS);
             break;
         case 0x6:
@@ -156,7 +157,7 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
                  add_index(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x0A:
-                  SDL_Log("Attends l'entrée de l'utilisateur depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  SDL_Log("Attends l'entrï¿½e de l'utilisateur depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
                  break;
               case 0x29:
