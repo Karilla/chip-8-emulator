@@ -25,7 +25,8 @@ enum Control{
    KEY_Y,
    KEY_X,
    KEY_C,
-   KEY_V
+   KEY_V,
+   KEY_SPACE
 };
 
 typedef struct State{

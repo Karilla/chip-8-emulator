@@ -142,9 +142,22 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                 case SDL_USEREVENT:
                   clock_tick(renderer, state,control);
                     break;
+               case SDL_KEYDOWN:
+                   switch(event.key.keysym.sym){
+                       case SDLK_SPACE:
+                           if(isDebug){
+                               Uint16 instr = fetch_instr(state);
+                               update_timer(state);
+                               decode_instr(state,instr,renderer,control);
+                           }
+                           break;
+                       default:
+                           break;
+                   }
+                   break;
                 case SDL_SYSWMEVENT:
                     if(event.syswm.msg->msg.win.msg == WM_COMMAND){
-                        if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_EXIT){
+                        if(LOWORD(event.syswm.msg->msg .win.wParam) == ID_EXIT){
                             isRunning = false;
                         }
                         else if(LOWORD(event.syswm.msg->msg.win.wParam) == ID_LOAD){
@@ -173,8 +186,6 @@ void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer
                        }
                     }
                     break;
-               case SDL_KEYUP:
-                  break;
                 default:
                     break;
             }

@@ -169,7 +169,7 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
                  binary_to_dec(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x55:
-                  SDL_Log("Store la valeur des registre jusqua v%d\n",(instruction >> 8) & MASK_4BITS);
+                  SDL_Log("Convertit en bcd depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  store_memory(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x65:
@@ -187,9 +187,11 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
 }
 
 void clock_tick(SDL_Renderer** renderer, State* state, enum Control controlKey){
+
     Uint16 instr = fetch_instr(state);
     update_timer(state);
     decode_instr(state,instr,renderer,controlKey);
+
 }
 
 Uint32 timer_callback(Uint32 interval, void* params){
