@@ -2,18 +2,13 @@
 #include "raylib.h"
 
 int main(int argc, char *argv[]){
-    /*
-   SDL_Log("%d\n",DELAY_OP);
-    State state;
-    HWND windowHandle;
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-
-    init_app(&state, &window, &renderer,&windowHandle);
-
-    launch_poll_event(&state,window,&renderer, windowHandle);
-*/
+    InitWindow(800,500, "Some test");
 }
+
+
+
+
+
 
 /*
  * while (isRunning)
@@ -40,3 +35,15 @@ int main(int argc, char *argv[]){
     };
 }
  */
+
+/*
+   SDL_Log("%d\n",DELAY_OP);
+    State state;
+    HWND windowHandle;
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+
+    init_app(&state, &window, &renderer,&windowHandle);
+
+    launch_poll_event(&state,window,&renderer, windowHandle);
+*/

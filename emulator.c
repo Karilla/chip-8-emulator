@@ -40,26 +40,26 @@ uint16_t fetch_instr(State* state){
     return temp;
 }
 
-void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,enum Control controlKey){
+void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
     switch(instruction >> 12){
         case 0x0:
             if((instruction & MASK_12BITS) == 0x0E0){
-                SDL_Log("Effacage de l'ecran\n");
+                printf("Effacage de l'ecran\n");
                 clear_screen(state);
-                update_grid(renderer, state);
+                update_grid(state);
             }
             if((instruction & MASK_12BITS) == 0x0EE){
                 state->PC = pop_stack(state);
-                SDL_Log("Popped from the stack\n");
+                printf("Popped from the stack\n");
             }
             break;
         case 0x1:
             jump(state,(instruction & ~0xF000));
-            SDL_Log("Jump\n");
+            printf("Jump\n");
             break;
         case 0x2:
             call_push(state, instruction & MASK_12BITS);
-            SDL_Log("Jump and push stack\n");
+            printf("Jump and push stack\n");
             break;
         case 0x3:
             skip_if_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
@@ -68,16 +68,16 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
             skip_if_not_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x5:
-        SDL_Log("Skif if v%d and v%d aren't equal");
+        printf("Skif if v%d and v%d aren't equal");
             skip_if_vx_vy_egal(state,(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS);
             break;
         case 0x6:
             set_register(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
-            SDL_Log("Set %d at register %d\n",instruction & MASK_8BITS, (instruction >> 8) & MASK_4BITS);
+            printf("Set %d at register %d\n",instruction & MASK_8BITS, (instruction >> 8) & MASK_4BITS);
             break;
         case 0x7:
             simple_add(state,(instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
-             SDL_Log("Add %d at v%d\n", instruction & MASK_8BITS,(instruction >> 8) & MASK_4BITS);
+             printf("Add %d at v%d\n", instruction & MASK_8BITS,(instruction >> 8) & MASK_4BITS);
             break;
         case 0x8:
             switch(instruction & MASK_4BITS){
@@ -117,7 +117,7 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
             break;
         case 0xA:
             set_index_register(state, instruction & MASK_12BITS);
-            SDL_Log("Set index register at %d\n", instruction & MASK_12BITS);
+            printf("Set index register at %d\n", instruction & MASK_12BITS);
             break;
         case 0xB:
            jump_offset(state,instruction & MASK_12BITS);
@@ -126,9 +126,9 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
            random(state, (instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
             break;
         case 0xD:
-            SDL_Log("Display with x = %d, y = %d, et n = %d\n",(instruction >> 8) & MASK_4BITS ,(instruction >> 4) & MASK_4BITS,instruction & MASK_4BITS);
+            printf("Display with x = %d, y = %d, et n = %d\n",(instruction >> 8) & MASK_4BITS ,(instruction >> 4) & MASK_4BITS,instruction & MASK_4BITS);
             display(state,(instruction >> 4) & MASK_4BITS, (instruction >> 8) & MASK_4BITS, instruction & MASK_4BITS);
-            update_grid(renderer, state);
+            update_grid(state);
             break;
         case 0xE:
            if((instruction & MASK_8BITS ) == 0x65){
@@ -141,39 +141,39 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
         case 0xF:
            switch(instruction & MASK_8BITS){
               case 0x07:
-                SDL_Log("Recupere la valeur du timer dans v%d\n",(instruction >> 8) & MASK_4BITS);
+                printf("Recupere la valeur du timer dans v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_timer_value(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x15:
-                  SDL_Log("Mets la valeur du timer depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Mets la valeur du timer depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  set_timer_value(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x18:
-                  SDL_Log("Mets la valeur du timer de son depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Mets la valeur du timer de son depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  set_sound_timer(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x1E:
-                  SDL_Log("Ajoute a l'index depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Ajoute a l'index depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  add_index(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x0A:
-                  SDL_Log("Attends l'entr�e de l'utilisateur depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Attends l'entr�e de l'utilisateur depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
                  break;
               case 0x29:
-                  SDL_Log("Recupere le caractere a afficher depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Recupere le caractere a afficher depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_character(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x33:
-                  SDL_Log("Recupere la valeur du timer dans v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Recupere la valeur du timer dans v%d\n",(instruction >> 8) & MASK_4BITS);
                  binary_to_dec(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x55:
-                  SDL_Log("Convertit en bcd depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Convertit en bcd depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  store_memory(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x65:
-                  SDL_Log("Recupere depuis la memoire jusqua v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Recupere depuis la memoire jusqua v%d\n",(instruction >> 8) & MASK_4BITS);
                  load_memory(state,(instruction >> 8) & MASK_4BITS);
                  break;
               default:
@@ -181,37 +181,9 @@ void decode_instr(State* state, uint16_t instruction, SDL_Renderer** renderer,en
            }
             break;
         default:
-           SDL_Log("Instruction not implemented yet : %04x\n",instruction);
+           printf("Instruction not implemented yet : %04x\n",instruction);
             break;
     }
-}
-
-void clock_tick(SDL_Renderer** renderer, State* state, enum Control controlKey){
-
-    Uint16 instr = fetch_instr(state);
-    update_timer(state);
-    decode_instr(state,instr,renderer,controlKey);
-
-}
-
-Uint32 timer_callback(Uint32 interval, void* params){
-    SDL_Event event;
-    SDL_UserEvent userevent;
-
-    /* In this example, our callback pushes an SDL_USEREVENT event
-    into the queue, and causes our callback to be called again at the
-    same interval: */
-
-    userevent.type = SDL_USEREVENT;
-    userevent.code = 0;
-    userevent.data1 = NULL;
-    userevent.data2 = NULL;
-
-    event.type = SDL_USEREVENT;
-    event.user = userevent;
-
-    SDL_PushEvent(&event);
-    return(interval);
 }
 
 uint8_t decode_control_key(enum Control controlKey){

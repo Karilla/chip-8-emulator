@@ -9,24 +9,24 @@
 #include <stdio.h>
 
 enum Control{
-   NO_KEY,
-   KEY_1,
-   KEY_2,
-   KEY_3,
-   KEY_4,
-   KEY_Q,
-   KEY_W,
-   KEY_E,
-   KEY_R,
-   KEY_A,
-   KEY_S,
-   KEY_D,
-   KEY_F,
-   KEY_Y,
-   KEY_X,
-   KEY_C,
-   KEY_V,
-   KEY_SPACE
+   NO_KEYS,
+   KEY_1S,
+   KEY_2S,
+   KEY_3S,
+   KEY_4S,
+   KEY_QS,
+   KEY_WS,
+   KEY_ES,
+   KEY_RS,
+   KEY_AS,
+   KEY_SS,
+   KEY_DS,
+   KEY_FS,
+   KEY_YS,
+   KEY_XS,
+   KEY_CS,
+   KEY_VS,
+   KEY_SPACES
 };
 
 typedef struct State{

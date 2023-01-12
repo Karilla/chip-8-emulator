@@ -4,7 +4,6 @@
 
 #ifndef REVISON_PRG2_INSTRUCTION_H
 #define REVISON_PRG2_INSTRUCTION_H
-#include "SDL2/SDL.h"
 #include "state.h"
 #include <inttypes.h>
 

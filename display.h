@@ -4,14 +4,13 @@
 
 #ifndef REVISON_PRG2_DISPLAY_H
 #define REVISON_PRG2_DISPLAY_H
-#include "SDL2/SDL.h"
 #include "state.h"
 #include <stdbool.h>
 
-void create_rectangle(SDL_Renderer** renderer, int x, int y , int w, int h, bool on_off);
+void create_rectangle(int x, int y , int w, int h, bool on_off);
 
-void create_grid(SDL_Renderer** renderer);
+void create_grid();
 
-void update_grid(SDL_Renderer** renderer, State* state);
+void update_grid(State* state);
 
 #endif //REVISON_PRG2_DISPLAY_H

@@ -3,6 +3,7 @@
 //
 
 #include "instruction.h"
+#include <stdlib.h>
 
 void jump(State* state, uint16_t address){
     state->PC = address;
@@ -42,7 +43,6 @@ void display(State* state,uint8_t y, uint8_t x,uint8_t n){
         }
         y_sprite++;
         if(x_sprite > 64 || y_sprite > 32){
-            SDL_Log("Break\n");
             break;
         }
     }
@@ -101,7 +101,7 @@ void xor(State* state, uint8_t x, uint8_t y){
 }
 
 void add_register(State* state, uint8_t x, uint8_t y){
-    if((x > (UCHAR_MAX - y)) && (y > (UCHAR_MAX - x))){
+    if((x > (256 - y)) && (y > (256 - x))){
         state->V[0xf] = 1;
     }
     state->V[0xF] = 0;

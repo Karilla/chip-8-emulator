@@ -2,9 +2,8 @@
 // Created by benoit on 01/08/2022.
 //
 
-#ifndef REVISON_PRG2_SCREEN_H
-#define REVISON_PRG2_SCREEN_H
-#include "SDL2/SDL.h"
+#ifndef REVISON_PRG2_SYSTEM_H
+#define REVISON_PRG2_SYSTEM_H
 #include "state.h"
 
 void registerWindowsClass(SDL_Window* window);
@@ -22,4 +21,4 @@ HWND getSDLWindowHandle(SDL_Window* win);
 char* get_rom_file(HWND win_handle);
 
 void create_table(HWND winHandle);
-#endif //REVISON_PRG2_SCREEN_H
+#endif //REVISON_PRG2_SYSTEM_H
