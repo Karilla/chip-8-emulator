@@ -1,8 +1,15 @@
-
+#define RAYGUI_IMPLEMENTATION
 #include "raylib.h"
+#include "raygui.h"
+
 
 int main(int argc, char *argv[]){
     InitWindow(800,500, "Some test");
+    SetExitKey(0);
+
+    while(!WindowShouldClose()){
+        GuiButton((Rectangle){200,10},"tesyt");
+    }
 }
 
 
