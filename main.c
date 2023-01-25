@@ -1,56 +1,23 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raylib.h"
 #include "raygui.h"
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
 
+uint64_t getNanosecond(void);
 
 int main(int argc, char *argv[]){
+    printf("%d\n",argc);
     InitWindow(800,500, "Some test");
     SetExitKey(0);
 
     while(!WindowShouldClose()){
-        GuiButton((Rectangle){200,10},"tesyt");
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        EndDrawing();
     }
 }
-
-
-
-
-
-
-/*
- * while (isRunning)
-{
-    SDL_PollEvent(&mainEvent);
-    switch (mainEvent.type)
-    {
-    case SDL_WINDOWEVENT_CLOSE:
-        mainEvent.type = SDL_QUIT;
-        SDL_PushEvent(&mainEvent);
-        break;
-    case SDL_SYSWMEVENT:
-        if (mainEvent.syswm.msg->msg.win.msg == WM_COMMAND)
-        {
-            if (LOWORD(mainEvent.syswm.msg->msg.win.wParam) == ID_EXIT)
-            {
-                isRunning = false;
-            }
-        }
-        break;
-    case SDL_QUIT:
-        isRunning = false;
-        break;
-    };
-}
- */
-
-/*
-   SDL_Log("%d\n",DELAY_OP);
-    State state;
-    HWND windowHandle;
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-
-    init_app(&state, &window, &renderer,&windowHandle);
-
-    launch_poll_event(&state,window,&renderer, windowHandle);
-*/

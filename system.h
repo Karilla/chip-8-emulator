@@ -6,19 +6,8 @@
 #define REVISON_PRG2_SYSTEM_H
 #include "state.h"
 
-void registerWindowsClass(SDL_Window* window);
+int sys_clock_tick(void);
 
-HWND display_modal(HWND winHandle);
+int sys_timer_tick(void)
 
-void init_app(State* state, SDL_Window** window, SDL_Renderer** renderer,HWND* winHandle);
-
-void launch_poll_event(State* state, SDL_Window* window, SDL_Renderer** renderer, HWND winHandle);
-
-HMENU ActivateMenu(HWND windowRef);
-
-HWND getSDLWindowHandle(SDL_Window* win);
-
-char* get_rom_file(HWND win_handle);
-
-void create_table(HWND winHandle);
 #endif //REVISON_PRG2_SYSTEM_H
