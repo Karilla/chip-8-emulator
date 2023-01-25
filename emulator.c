@@ -9,11 +9,11 @@
 #define MASK_8BITS 0x00FF
 #define MASK_4BITS 0x000F
 
-void load_program(State* state, const char* filename){
+int load_program(State* state, const char* filename){
     FILE* program_file = fopen(filename, "rb");
     if(!program_file){
         printf("Cannot open %s ! Try again>>\n", filename);
-        return;
+        return -1;
     }
 
     fseek(program_file, 0l, SEEK_END);
@@ -26,6 +26,7 @@ void load_program(State* state, const char* filename){
 
     fclose(program_file);
     printf("Program loaded successfully\n");
+    return 0;
 }
 
 
@@ -185,4 +186,5 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
 void update_timer(State* state){
     if(state->delay_timer > 0) state->delay_timer--;
     if(state->sound_timer > 0) state->sound_timer--;
+    printf("Timer = %d\n", state->delay_timer);
 }

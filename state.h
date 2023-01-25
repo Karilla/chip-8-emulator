@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 enum Control{
-   NO_KEYS,
    KEY_1S,
    KEY_2S,
    KEY_3S,
@@ -22,6 +21,7 @@ enum Control{
    KEY_XS,
    KEY_CS,
    KEY_VS,
+   NO_KEYS,
    KEY_SPACES
 };
 
@@ -35,6 +35,7 @@ typedef struct State{
     uint8_t sound_timer;
     uint8_t V[16];
     int screen[64][32];
+    enum Control controlKey
 }State;
 
 
@@ -65,4 +66,6 @@ void push_stack(State* state, uint16_t address);
 uint16_t pop_stack(State* state);
 
 void load_font(State* state,const uint8_t* font);
+
+void set_key(State* state, enum Control key);
 #endif //REVISON_PRG2_STATE_H

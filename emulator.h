@@ -2,7 +2,7 @@
 #define REVISON_PRG2_EMULATOR_H
 #include "state.h"
 
-void load_program(State* state, const char* filename);
+int load_program(State* state, const char* filename);
 
 uint16_t fetch_instr(State* state);
 

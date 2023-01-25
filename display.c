@@ -4,25 +4,19 @@
 const int PIXEL_SIZE = 10;
 
 void create_grid(){
-   BeginDrawing();
+    BeginDrawing();
     for(int x = 0; x < 64;++x){
         for(int y = 0; y < 32; ++y){
-            //create_rectangle(renderer,PIXEL_SIZE * x, 10 + PIXEL_SIZE * y, PIXEL_SIZE, PIXEL_SIZE, 0);
-            DrawRectangle(PIXEL_SIZE * x, PIXEL_SIZE * y,PIXEL_SIZE,PIXEL_SIZE,WHITE);
+            DrawRectangle(PIXEL_SIZE * x, 30 +PIXEL_SIZE * y,PIXEL_SIZE,PIXEL_SIZE,BLACK);
         }
     }
-    //SDL_RenderPresent(*renderer);
     EndDrawing();
 }
 
 void update_grid(State* state){
-   BeginDrawing();
     for(int y = 0; y < 32;++y){
         for(int x = 0; x < 64; ++x){
-            //create_rectangle(renderer,PIXEL_SIZE * x, 10 + PIXEL_SIZE * y, PIXEL_SIZE, PIXEL_SIZE, state->screen[x][y]);
-           DrawRectangle(PIXEL_SIZE * x, PIXEL_SIZE * y,PIXEL_SIZE,PIXEL_SIZE,state->screen[x][y] ? BLACK : WHITE);
+           DrawRectangle(PIXEL_SIZE * x, 30 +PIXEL_SIZE * y,PIXEL_SIZE,PIXEL_SIZE,state->screen[x][y] ? WHITE : BLACK);
         }
     }
-    //SDL_RenderPresent(*renderer);
-    EndDrawing();
 }
