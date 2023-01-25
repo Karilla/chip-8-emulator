@@ -1,7 +1,3 @@
-//
-// Created by benoit on 12/01/2023.
-//
-
 #ifndef REVISON_PRG2_LOG_H
 #define REVISON_PRG2_LOG_H
 #include <stdio.h>

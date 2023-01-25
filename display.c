@@ -1,7 +1,3 @@
-//
-// Created by benoit on 06/08/2022.
-//
-
 #include "display.h"
 #include "raylib.h"
 

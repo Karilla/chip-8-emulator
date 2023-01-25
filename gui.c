@@ -1,5 +1,5 @@
-//
-// Created by benoit on 12/01/2023.
-//
-
 #include "gui.h"
+
+void init_window(const int width, const int height, char* title){
+
+}

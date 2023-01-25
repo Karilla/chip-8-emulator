@@ -1,7 +1,3 @@
-//
-// Created by benoit on 06/08/2022.
-//
-
 #ifndef REVISON_PRG2_DISPLAY_H
 #define REVISON_PRG2_DISPLAY_H
 #include "state.h"

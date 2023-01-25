@@ -1,7 +1,3 @@
-//
-// Created by benoit on 26/07/2022.
-//
-
 #include "emulator.h"
 #include "instruction.h"
 #include <stdio.h>
@@ -184,10 +180,6 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
            printf("Instruction not implemented yet : %04x\n",instruction);
             break;
     }
-}
-
-uint8_t decode_control_key(enum Control controlKey){
-   return (uint8_t) controlKey;
 }
 
 void update_timer(State* state){

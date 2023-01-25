@@ -1,6 +1,3 @@
-//
-// Created by benoit on 26/07/2022.
-//
 #include "state.h"
 #include <stdlib.h>
 #include <time.h>

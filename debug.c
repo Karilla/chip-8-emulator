@@ -1,7 +1,3 @@
-//
-// Created by benoit on 26/07/2022.
-//
-
 #include "debug.h"
 #include <stdio.h>
 

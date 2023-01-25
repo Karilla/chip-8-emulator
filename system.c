@@ -1,6 +1,3 @@
-//
-// Created by benoit on 01/08/2022.
-//
 #include <inttypes.h>
 #include <time.h>
 
