@@ -44,6 +44,7 @@ void load_font(State* state,const uint8_t* font){
 void push_stack(State* state, uint16_t address){
     state->memory[state->stack_pointer] = (uint8_t) (address >> 8);
     state->memory[state->stack_pointer + 1] = (uint8_t) address ;
+    printf("DEEEEEEEEEEE %d\n", address);
     state->stack_pointer -= 2;
 }
 
@@ -51,6 +52,7 @@ uint16_t pop_stack(State* state){
     state->stack_pointer += 2;
     uint16_t instr = (state->memory[state->stack_pointer] << 8);
     instr |= state->memory[state->stack_pointer + 1];
+    printf("LEEEEEEEEEEE %d\n", instr);
     return instr;
 }
 

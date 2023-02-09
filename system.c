@@ -3,9 +3,10 @@
 #include "raylib.h"
 #include "state.h"
 #include "gui.h"
+#include <stdio.h>
 
 // CPU settings
-#define CPU_FREQ 100 // 600Hz
+#define CPU_FREQ 10 // 600Hz
 #define CPU_TIMER_FREQ 50 // 60Hz
 #define CPU_NS_PER_HZ 1000000000 // 1s
 #define CPU_NS_PER_CYCLE CPU_NS_PER_HZ / CPU_FREQ // 0.001ms or 1KHz
@@ -34,7 +35,7 @@ int sys_clock_tick(void) {
 
 void process_input(State* state){
     if(IsKeyDown(49)) set_key(state, KEY_1S);
-    else if(IsKeyDown(50)) set_key(state, KEY_2S);
+    else if(IsKeyDown(50)) printf("Pressed\n");//set_key(state, KEY_2S);
     else if(IsKeyDown(51)) set_key(state, KEY_3S);
     else if(IsKeyDown(52)) set_key(state, KEY_4S);
 

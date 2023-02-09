@@ -175,7 +175,8 @@ void add_index(State* state, uint8_t x){
 }
 
 void get_key(State* state, uint8_t x, uint8_t key){
-   if(key == 0){
+    printf("key = %d\n",key);
+   if(key == NO_KEYS){
       state->PC -= 2;
    }
    else{

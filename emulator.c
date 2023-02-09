@@ -38,6 +38,7 @@ uint16_t fetch_instr(State* state){
 }
 
 void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
+    printf("Control Key debuged = %d\n",controlKey);
     switch(instruction >> 12){
         case 0x0:
             if((instruction & MASK_12BITS) == 0x0E0){
@@ -154,7 +155,7 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
                  add_index(state,(instruction >> 8) & MASK_4BITS);
                  break;
               case 0x0A:
-                  printf("Attends l'entr�e de l'utilisateur depuis v%d\n",(instruction >> 8) & MASK_4BITS);
+                  printf("Attends l'entree de l'utilisateur depuis v%d\n",(instruction >> 8) & MASK_4BITS);
                  get_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
                  break;
               case 0x29:
@@ -186,5 +187,5 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
 void update_timer(State* state){
     if(state->delay_timer > 0) state->delay_timer--;
     if(state->sound_timer > 0) state->sound_timer--;
-    printf("Timer = %d\n", state->delay_timer);
+    //printf("Timer = %d\n", state->delay_timer);
 }
