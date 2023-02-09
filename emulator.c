@@ -38,7 +38,7 @@ uint16_t fetch_instr(State* state){
 }
 
 void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
-    printf("Control Key debuged = %d\n",controlKey);
+    //printf("Control Key debuged = %d\n",controlKey);
     switch(instruction >> 12){
         case 0x0:
             if((instruction & MASK_12BITS) == 0x0E0){
@@ -60,13 +60,15 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
             printf("Jump and push stack\n");
             break;
         case 0x3:
+           printf("test 1\n");
             skip_if_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x4:
+           printf("Test 2 \n");
             skip_if_not_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x5:
-        printf("Skif if v%d and v%d aren't equal");
+        printf("Skif if v%d and v%d aren't equal\n",(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS);
             skip_if_vx_vy_egal(state,(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS);
             break;
         case 0x6:
@@ -111,6 +113,7 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
             }
             break;
         case 0x9:
+           printf("If vx and vy not equal\n");
             skip_if_vx_vy_not_egal(state,(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS);
             break;
         case 0xA:

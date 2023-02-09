@@ -4,10 +4,11 @@
 #include "state.h"
 #include "gui.h"
 #include <stdio.h>
+#include "constant .h"
 
 // CPU settings
 #define CPU_FREQ 10 // 600Hz
-#define CPU_TIMER_FREQ 50 // 60Hz
+#define CPU_TIMER_FREQ 4 // 60Hz
 #define CPU_NS_PER_HZ 1000000000 // 1s
 #define CPU_NS_PER_CYCLE CPU_NS_PER_HZ / CPU_FREQ // 0.001ms or 1KHz
 #define CPU_NS_PER_TIMER_CYCLE CPU_NS_PER_HZ / CPU_TIMER_FREQ // 16670000ns or 60Hz
@@ -74,5 +75,5 @@ int sys_timer_tick(void) {
 
 void init_game(State* state){
     init_state(state);
-    init_window(640,350,"TODO CHANGE ME");
+    init_window(GAME_WIDTH + DEBUGER_WIDTH,GAME_HEIGHT,"TODO CHANGE ME");
 }
