@@ -73,7 +73,7 @@ int sys_timer_tick(void) {
     return 1;
 }
 
-void init_game(State* state){
+void init_game(State* state, const int width, const int height, bool mode){
     init_state(state);
-    init_window(GAME_WIDTH + DEBUGER_WIDTH,GAME_HEIGHT,"TODO CHANGE ME");
+    init_window(width,height,mode ? "Debug Mode" :"Normal Mode");
 }

@@ -35,7 +35,7 @@ typedef struct State{
     uint8_t sound_timer;
     uint8_t V[16];
     int screen[64][32];
-    enum Control controlKey
+    enum Control controlKey;
 }State;
 
 

@@ -48,23 +48,23 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
             }
             if((instruction & MASK_12BITS) == 0x0EE){
                 state->PC = pop_stack(state);
-                printf("Popped from the stack\n");
+                printf("Popped from the stack at address %d\n", state->PC);
             }
             break;
         case 0x1:
             jump(state,(instruction & ~0xF000));
-            printf("Jump\n");
+            printf("Jump at %d\n",(instruction & ~0xF000));
             break;
         case 0x2:
+           printf("Jump at %d and push %d in stack\n", instruction & MASK_12BITS, state->PC);
             call_push(state, instruction & MASK_12BITS);
-            printf("Jump and push stack\n");
             break;
         case 0x3:
-           printf("test 1\n");
+           printf("Skip if v%d egal %d\n",(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             skip_if_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x4:
-           printf("Test 2 \n");
+           printf("Skip if v%d is not egal %d\n",(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             skip_if_not_vx_egal(state,(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             break;
         case 0x5:
@@ -82,6 +82,7 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
         case 0x8:
             switch(instruction & MASK_4BITS){
                 case 0:
+                   printf("v% is set by v%d",(instruction >> 8) & MASK_4BITS,(instruction >> 4) & MASK_4BITS );
                    set(state, (instruction >> 8) & MASK_4BITS, (instruction >> 4) & MASK_4BITS);
                    break;
                 case 1:
