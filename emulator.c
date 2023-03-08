@@ -1,7 +1,6 @@
 #include "emulator.h"
 #include "instruction.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include "display.h"
 #include "debug.h"
 
@@ -125,7 +124,7 @@ void decode_instr(State* state, uint16_t instruction,enum Control controlKey){
            jump_offset(state,instruction & MASK_12BITS);
             break;
         case 0xC:
-           random(state, (instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
+            chip8_random(state, (instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
             break;
         case 0xD:
             printf("Display with x = %d, y = %d, et n = %d\n",(instruction >> 8) & MASK_4BITS ,(instruction >> 4) & MASK_4BITS,instruction & MASK_4BITS);

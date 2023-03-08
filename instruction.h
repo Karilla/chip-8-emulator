@@ -41,7 +41,7 @@ void shift(State* state, uint8_t x, uint8_t y, bool direction);
 
 void jump_offset(State* state, uint16_t value);
 
-void random(State* state,uint8_t reg, uint8_t modulo);
+void chip8_random(State* state, uint8_t reg, uint8_t modulo);
 
 void skip_if_key(State* state, uint8_t x, uint8_t key);
 

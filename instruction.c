@@ -142,7 +142,7 @@ void jump_offset(State* state, uint16_t value){
     state->PC = state->V[0] + value;
 }
 
-void random(State* state,uint8_t reg, uint8_t modulo){
+void chip8_random(State* state, uint8_t reg, uint8_t modulo){
     state->V[reg] = rand() & modulo;
 }
 
