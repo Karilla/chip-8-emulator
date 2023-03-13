@@ -14,13 +14,13 @@ int main(int argc, char *argv[]){
     if(argc <= 1){
         printf("No argument provided... Started without launching game\n");
         programState = IDLE;
-       init_game(&state, GAME_WIDTH, GAME_HEIGHT, false);
+        init_game(&state, GAME_WIDTH, GAME_HEIGHT, false);
     }
     else if(argc == 2){
        programState = RUNNING;
        init_game(&state, GAME_WIDTH, GAME_HEIGHT, false);
     }
-    else if(argc == 3 && (strcmp(argv[2],"-debug") == 0)){
+    else if(argc == 3 && (strcmp(argv[2],"--debug") == 0)){
        programState = DEBUGING;
        init_game(&state,GAME_WIDTH + DEBUGER_WIDTH, GAME_HEIGHT, true);
     }
@@ -38,25 +38,31 @@ int main(int argc, char *argv[]){
        BeginDrawing();
        ClearBackground(BLACK);
        switch (programState) {
-          case 1:
+          case IDLE:
+              if(GuiButton((Rectangle){0,0,200,20},"Choose a file ")){
+                  programState = ERROR;
+              }
              break;
-          case 2:
+          case RUNNING:
              if(sys_clock_tick()){
                 decode_instr(&state, fetch_instr(&state), state.controlKey);
              }
              if(sys_timer_tick()){
                 update_timer(&state);
              }
+             update_grid(&state);
              break;
-          case 3:
+          case DEBUGING:
              break;
-          case 4:
+          case ERROR:
              DrawText("ERROR OCCURED PLS RESTARD THE PROGRAM",10,200,50,RED);
              break;
+           case MENU:
+               break;
           default:
              break;
        }
-       update_grid(&state);
+
        DrawFPS(0,0);
        char string[512];
        for(int i = 0; i < 16; i++){
