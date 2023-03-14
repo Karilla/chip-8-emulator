@@ -6,7 +6,7 @@ int load_program(State* state, const char* filename);
 
 uint16_t fetch_instr(State* state);
 
-void decode_instr(State* state, uint16_t instruction, enum Control controlKey);
+char* decode_instr(State* state, uint16_t instruction, enum Control controlKey);
 
 void update_timer(State* state);
 

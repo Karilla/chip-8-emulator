@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
              break;
           case RUNNING:
              if(sys_clock_tick()){
-                decode_instr(&state, fetch_instr(&state), state.controlKey);
+                 "%s",decode_instr(&state, fetch_instr(&state), state.controlKey);
              }
              if(sys_timer_tick()){
                 update_timer(&state);
