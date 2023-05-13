@@ -1,2 +1,5 @@
-# chip-8-emulator
-A simple chip8 emulator written in c
+# Chip 8 Emulator
+
+A small side project to learn c and emulator developpement
+
+I use Raylib for GUI
