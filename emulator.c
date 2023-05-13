@@ -133,11 +133,11 @@ char* decode_instr(State* state, uint16_t instruction,enum Control controlKey){
             sprintf(log,"Set index register at %d\n", instruction & MASK_12BITS);
             return log;
         case 0xB:
-            sscanf(log,"Jump to address %d + v0\n",instruction & MASK_12BITS);
+            sprintf(log,"Jump to address %d + v0\n",instruction & MASK_12BITS);
             jump_offset(state,instruction & MASK_12BITS);
             return log;
         case 0xC:
-            sscanf(log,"Put in v%d a random number modulo %d",(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
+            sprintf(log,"Put in v%d a random number modulo %d",(instruction >> 8) & MASK_4BITS,instruction & MASK_8BITS);
             chip8_random(state, (instruction >> 8) & MASK_4BITS, instruction & MASK_8BITS);
             return log;
         case 0xD:
@@ -147,7 +147,7 @@ char* decode_instr(State* state, uint16_t instruction,enum Control controlKey){
             return log;
         case 0xE:
            if((instruction & MASK_8BITS ) == 0x9E){
-               sscanf(log,"Skip if key in v%d is pressed",(instruction >> 8) & MASK_4BITS);
+               sprintf(log,"Skip if key in v%d is pressed",(instruction >> 8) & MASK_4BITS);
                skip_if_key(state,(instruction >> 8) & MASK_4BITS,controlKey);
                return log;
            }
