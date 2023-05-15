@@ -4,10 +4,11 @@
 const int PIXEL_SIZE = 10;
 
 void create_grid(){
+   printf("Test\n");
     BeginDrawing();
     for(int x = 0; x < 64;++x){
         for(int y = 0; y < 32; ++y){
-            DrawRectangle(PIXEL_SIZE * x, 30 +PIXEL_SIZE * y,PIXEL_SIZE,PIXEL_SIZE,BLACK);
+            DrawRectangle(PIXEL_SIZE * x, 30 +PIXEL_SIZE * y,PIXEL_SIZE,PIXEL_SIZE,WHITE);
         }
     }
     EndDrawing();

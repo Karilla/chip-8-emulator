@@ -12,6 +12,7 @@
 int main(int argc, char *argv[]){
     State state;
     uint8_t programState;
+   char* log = (char*)calloc(512, sizeof (char ));
     if(argc <= 1){
         programState = IDLE;
         init_game(&state, GAME_WIDTH, GAME_HEIGHT, false);
@@ -24,7 +25,7 @@ int main(int argc, char *argv[]){
     }
     else if(argc == 3 && (strcmp(argv[2],"--debug") == 0)){
        programState = DEBUGING;
-       init_game(&state,GAME_WIDTH + DEBUGER_WIDTH, GAME_HEIGHT, true);
+       init_game(&state,GAME_WIDTH + DEBUGER_WIDTH, GAME_HEIGHT + DEBUGER_HEIGHT, true);
        printf("Starting in debug mode.... \n");
     }
     else{
@@ -49,7 +50,7 @@ int main(int argc, char *argv[]){
              break;
           case RUNNING:
              if(sys_clock_tick()){
-                 "%s",decode_instr(&state, fetch_instr(&state), state.controlKey);
+                decode_instr(&state, fetch_instr(&state), state.controlKey);
              }
              if(sys_timer_tick()){
                 update_timer(&state);
@@ -58,6 +59,11 @@ int main(int argc, char *argv[]){
              break;
           case DEBUGING:
 
+               if(IsKeyPressed(KEY_SPACE)){
+                  log = decode_instr(&state, fetch_instr(&state), state.controlKey);
+
+               }
+             DrawText(log,10,430,21,RED);
              break;
           case ERROR:
              DrawText("ERROR OCCURED PLS RESTART THE PROGRAM",10,200,50,RED);
@@ -70,6 +76,8 @@ int main(int argc, char *argv[]){
 
        DrawFPS(0,0);
        draw_state(640 ,20,21,&state);
+       update_grid(&state);
        EndDrawing();
     }
+    free(log);
 }

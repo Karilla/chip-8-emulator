@@ -16,7 +16,7 @@ void init_state(State* state){
     //memset(state->screen,0,32*64);
     for(int x = 0; x < 64;++x){
         for(int y = 0; y < 32; ++y){
-            state->screen[x][y] = 0;
+            state->screen[x][y] = 1;
         }
     }
     load_font(state,std_font);

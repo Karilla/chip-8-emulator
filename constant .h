@@ -5,6 +5,7 @@
 static const int GAME_WIDTH = 640;
 static const int GAME_HEIGHT = 410;
 static const int DEBUGER_WIDTH = 200;
+static const int DEBUGER_HEIGHT = 100;
 static const int MENU_WIDTH = 0;
 static const int MENU_HEIGHT;
 

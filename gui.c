@@ -30,4 +30,7 @@ void draw_state(int x, int y, int font_size, State* state){
    y+= STEP_Y_DEBUG;
    snprintf(string, sizeof(string),"Sound Timer = %d", state->sound_timer);
    DrawText(string,x,y,font_size,RED);
+   y+= STEP_Y_DEBUG;
+   snprintf(string,sizeof(string),"Index = %d",state->index);
+   DrawText(string,x,y,font_size,RED);
 }
