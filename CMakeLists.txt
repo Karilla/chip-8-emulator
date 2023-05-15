@@ -12,7 +12,7 @@ set(CMAKE_C_FLAGS -std=c11)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-add_executable(Chip-8-Emulator main.c state.c state.h emulator.c emulator.h debug.c debug.h instruction.c instruction.h system.c system.h display.c display.h "constant .h" widget.c widget.h log.c log.h gui.c gui.h raygui.h raygui.c gui.c state_machine.c state_machine.h)
+add_executable(Chip-8-Emulator src/main.c src/state.c src/state.h src/emulator.c src/emulator.h src/debug.c src/debug.h src/instruction.c src/instruction.h src/system.c src/system.h src/display.c src/display.h "src/constant .h" src/widget.c src/widget.h src/log.c src/log.h src/gui.c src/gui.h src/raygui.h src/raygui.c src/gui.c src/state_machine.c src/state_machine.h)
 SET(CMAKE_C_FLAGS_DEBUG "-O0")
 
 target_link_libraries(Chip-8-Emulator raylib)

@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
 
                if(IsKeyPressed(KEY_SPACE)){
                   log = decode_instr(&state, fetch_instr(&state), state.controlKey);
-
+                  update_timer(&state);
                }
              DrawText(log,10,430,21,RED);
              break;
